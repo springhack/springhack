@@ -10,7 +10,7 @@
 
 ### 看着好玩抄人家的 Logo
 
-![](assets/images/readme.svg)
+![](assets/readme.svg)
 
 ### 有的没的
 
