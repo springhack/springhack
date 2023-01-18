@@ -4,6 +4,7 @@ permalink: /about
 permalink_name: /about
 title: About
 detail_image: ../assets/springhack.png
+comments: true
 ---
 
 ## 谁啊
