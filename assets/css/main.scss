@@ -90,3 +90,14 @@ pre {
 }
 
 .post-tags a:hover { color: var(--alt-color); background-color: initial; }
+
+.contact-me {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.contact-me a {
+  padding: 0 20px 0 0;
+  text-decoration: none;
+}

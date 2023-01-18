@@ -5,7 +5,7 @@
       <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
       <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
       <script>
-      var gitalk = new Gitalk({
+        var gitalk = new Gitalk({
           id: '{{ page.url | truncate: 50, '' }}',
           clientID: '{{ site.gitalk.clientID }}',
           clientSecret: '{{ site.gitalk.clientSecret }}',
@@ -15,8 +15,16 @@
           labels: ['gitment'],
           perPage: 50,
           proxy: 'https://win.dosk.win/fetch/https://github.com/login/oauth/access_token'
-      })
-      gitalk.render('gitalk-container')
+        })
+        gitalk.render('gitalk-container')
       </script>
+      <style>
+        .gt-header-comment, .gt-comment-content {
+          filter: invert(90%);
+        }
+        #gitalk-container p {
+          color: initial;
+        }
+      </style>
   {% endcase %}
 {% endif %}
