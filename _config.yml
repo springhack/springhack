@@ -33,11 +33,11 @@ plugins:
   - jekyll-mentions
 
 header_pages:
-  - pages/404.md
-  - pages/about.md
+  - pages/home.md
   - pages/archives.md
   - pages/categories.md
   - pages/old_posts.md
+  - pages/about.md
 
 # set the size of the text to 'large' or 'small', default is small
 font-size: small
