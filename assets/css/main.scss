@@ -80,6 +80,22 @@ pre {
   overflow: scroll;
 }
 
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  width: 100%;
+  flex-grow: 1;
+  position: relative;
+}
+
+footer {
+  margin: 0.4em 0 20px 0;
+}
+
 .post-tags {
   display: flex;
   flex-wrap: wrap;
@@ -108,4 +124,9 @@ pre {
   width: 14px;
   height: 14px;
   position: relative;
+}
+
+.home-paginator {
+  bottom: 0;
+  position: absolute;
 }
