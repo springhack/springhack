@@ -1,11 +1,11 @@
 /*
  *  Author: SpringHack - springhack@live.cn
- *  Last modified: 2022-09-28 15:26:24
+ *  Last modified: 2023-01-18 23:29:54
  *  Filename: index.js
  *  Description: Created by SpringHack using vim automatically.
  */
 // Inject github markdown css
-CMS.registerPreviewStyle('/admin/markdown.css');
+CMS.registerPreviewStyle('/admin/css/markdown.css');
 
 // Hook login phase
 let loginButton = null;
