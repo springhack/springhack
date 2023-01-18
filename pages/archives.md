@@ -3,6 +3,7 @@ layout: page
 permalink: /archives
 permalink_name: /archives
 title: Archives
+comments: false
 detail_image: ../assets/springhack.png
 ---
 

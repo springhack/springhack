@@ -3,6 +3,7 @@ layout: page
 permalink: /categories
 permalink_name: /categories
 title: Categories
+comments: false
 detail_image: ../assets/springhack.png
 ---
 

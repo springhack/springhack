@@ -1,9 +1,11 @@
 title: "Dosk 技术站"
 tagline: "SpringHack 的无名技术小站"
 description: "SpringHack 的无名技术小站"
-github_username: springhack
 baseurl: "/"
 url: "https://dosk.win"
+
+github_username: springhack
+twitter_username: springhack
 
 plugins:
   - jemoji

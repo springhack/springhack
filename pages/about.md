@@ -4,7 +4,6 @@ permalink: /about
 permalink_name: /about
 title: About
 detail_image: ../assets/springhack.png
-comments: true
 ---
 
 ## 谁啊
@@ -108,21 +107,3 @@ Email: springhack#live•cn
 > 大学期间负责过社团也进过学生会最后还是喜欢技术
 > 奖学金也拿过几千，证书也有过不少，不过我现在就想专心的研究技术
 > 可能当下我的技术不是最强的，不过我一定是那个最要强的 -。-
-
-
-## 联系
-
-{% for website in site.data.social %}
-* {{ website.sitename }}：[@{{ website.name }}]({{ website.url }})
-{% endfor %}
-
-## Skill Keywords
-
-{% for category in site.data.skills %}
-### {{ category.name }}
-<div class="btn-inline">
-{% for keyword in category.keywords %}
-<button class="btn btn-outline" type="button">{{ keyword }}</button>
-{% endfor %}
-</div>
-{% endfor %}
