@@ -1,0 +1,139 @@
+
+
+<p>react-redux的使用方法我就不提了，那么多教程，都是单个reducer，所以基本从来没人提到一个事情－－</p>
+
+<p>先看如下代码：</p>
+
+<pre>
+<code class="language-javascript">import React from 'react';
+import ReactDOM from 'react-dom';
+import {bindActionCreators, combineReducers, createStore} from 'redux';
+import {connect, Provider} from 'react-redux';
+
+let initialState = {
+    name : 'SpringHack'
+};
+
+let reducer_a = (state = initialState, action) =&gt; {
+    switch (action.type)
+    {
+        case 'CHANGE_NAME_A':
+            return {
+                name : 'AAAA'
+            }
+        break;
+        default:
+            return state;
+        break;
+    }
+}
+
+let reducer_b = (state = initialState, action) =&gt; {
+    switch (action.type)
+    {
+        case 'CHANGE_NAME_B':
+            return {
+                name : 'BBBB'
+            }
+        break;
+        default:
+            return state;
+        break;
+    }
+}
+
+let reducers = combineReducers({
+    reducer_a,
+    reducer_b
+});
+
+let store = createStore(reducers);
+
+let actions = bindActionCreators({
+    A() {
+        return {
+            type : 'CHANGE_NAME_A'
+        };
+    },
+    B() {
+        return {
+            type : 'CHANGE_NAME_B'
+        };
+    }
+}, store.dispatch);
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            &lt;div onClick={this.Click.bind(this)}&gt;
+                {this.props.reducer_a.name}&lt;br /&gt;
+                {this.props.reducer_b.name}&lt;br /&gt;
+            &lt;/div&gt;
+        );
+    }
+    Click() {
+        actions.A();
+        actions.B();
+    }
+}
+
+const MyApp = connect(state =&gt; state)(App);
+
+ReactDOM.render(
+    &lt;Provider store={store}&gt;
+        &lt;MyApp /&gt;
+    &lt;/Provider&gt;
+    , document.body);</code></pre>
+
+<p>看到 Render方法里调用的是</p>
+
+<pre>
+<code class="language-javascript">this.props.reducer_a.name</code></pre>
+
+<p>而不是</p>
+
+<pre>
+<code class="language-javascript">this.props.name</code></pre>
+
+<p>是因为</p>
+
+<pre>
+<code class="language-javascript">combineReducers</code></pre>
+
+<p>方法被调用后所有的 reducer 返回的state有了各自独立的 part－－</p>
+
+<p>为毛从来没有一篇教程提到过 2333</p>
+
+<p>还是得看看官方文档，官方Demo是酱紫，没有&nbsp;combineReducers 的实例：</p>
+
+<pre>
+<code class="language-javascript">function todoApp(state = {}, action) {
+  return {
+    visibilityFilter: visibilityFilter(state.visibilityFilter, action),
+    todos: todos(state.todos, action)
+  }
+}</code></pre>
+
+<p>这已经更改了返回的 state ，和 reducer 是绑定了的。不过，官方没明确说明这一点，但是看下面，改成用&nbsp;combineReducers 之后：</p>
+
+<pre>
+<code class="language-javascript">import { combineReducers } from 'redux'
+
+const todoApp = combineReducers({
+  visibilityFilter,
+  todos
+})
+
+export default function todoApp(state = {}, action) {
+  return {
+    visibilityFilter: visibilityFilter(state.visibilityFilter, action),
+    todos: todos(state.todos, action)
+  }
+}</code></pre>
+
+<p>官方说&ldquo; &nbsp;<strong>The&nbsp;<code>state</code>&nbsp;parameter is different for every reducer, and corresponds to the part of the state it manages. &nbsp;</strong>&rdquo;，包含了格式变化的问题，详细链接：&nbsp;<a href="http://redux.js.org/docs/basics/Reducers.html" target="_blank">http://redux.js.org/docs/basics/Reducers.html</a>&nbsp;&nbsp;</p>
+
+<p>所以，以后还是看官方文档吧，而且要仔细，我现在连翻译的文档都不怎么敢信了，当然公认的大神还是信得过的－－ &nbsp;</p>

@@ -1,0 +1,19 @@
+
+
+
+
+<pre class="prettyprint lang-cpp linenums"><pre class="prettyprint lang-cpp linenums"><pre class="prettyprint lang-vb linenums"><pre class="prettyprint lang-vb linenums">Private Declare Function SetWindowPos Lib “user32″ ( _ 
+ByVal hwnd As Long, _ 
+ByVal hWndInsertAfter As Long, _ 
+ByVal x As Long, ByVal y As Long, _ 
+ByVal cx As Long, ByVal cy As Long, _ 
+ByVal wFlags As Long _ 
+) As Long 
+Const HWND_TOPMOST = -1 
+Const SWP_SHOWWINDOW = &H40 
+Private Sub Form_load() 
+App.TaskVisible = False 
+Dim retValue As Long 
+retValue = SetWindowPos(Me.hwnd, HWND_TOPMOST, Me.CurrentX, Me.CurrentY, 300, 300, SWP_SHOWWINDOW) 
+WindowState = vbMaximized 
+End Sub</pre></pre></pre><pre class="prettyprint lang-cpp linenums"></pre></pre>

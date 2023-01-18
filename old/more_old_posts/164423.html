@@ -1,0 +1,91 @@
+
+
+<blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">其实这里只写了View没有逻辑部分，但是逻辑部分其实不复杂。科科</p></blockquote><blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">这里我使用了muicss的react组件，因为确实挺好用＝＝。<br style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;" />然后，我写了编译和部署的脚本：</p></blockquote><blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">脚本和项目地址都在：&nbsp;<a href="https://github.com/springhack/alxw_judge_f2e" style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(245, 146, 0); text-decoration: none; transition: all 0.24s; overflow: hidden; text-overflow: ellipsis; word-spacing: normal; word-break: break-word; word-wrap: break-word;">alxw_judge_f2e</a><br style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;" />但是要依赖后端的框架：&nbsp;<a href="https://github.com/springhack/alxw_judge_system" style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(245, 146, 0); text-decoration: none; transition: all 0.24s; overflow: hidden; text-overflow: ellipsis; word-spacing: normal; word-break: break-word; word-wrap: break-word;">alxw_judge_system</a><br style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;" />直接上代码，index.js：</p></blockquote><pre style="margin-top: 0.95em; margin-bottom: 0.95em; padding: 1em; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 13px; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; line-height: 19px; overflow: auto; border-radius: 3px; width: 656.75px; white-space: pre-wrap; color: rgb(51, 51, 51); background: rgb(248, 248, 248);"><code style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 1em; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; color: rgb(65, 65, 65); white-space: inherit; border-radius: 2px; word-break: break-all; background: 0px center;">import React from 'react';
+import ReactDOM from 'react-dom';
+import {Appbar, Form, Container, Panel, Input, Button} from 'muicss/react';
+
+import './index.less';
+
+class App extends React.Component {
+    constructor(props) {
+        super();
+        this.state = {
+            vimg : '/ValidationCode'
+        };
+    }
+    render() {
+        return (
+            &lt;Container&gt;
+                &lt;Panel className='header'&gt;
+                    &lt;h2&gt;今天的风儿好喧嚣&lt;/h2&gt;
+                    &lt;section className='login mui-form--inline'&gt;
+                        &lt;Input ref='l_user' label='Username' floatingLabel={true} required={true} /&gt;
+                        &lt;Input type='password' ref='l_pass' label='Password' floatingLabel={true} required={true} /&gt;
+                        &lt;Button onClick={this.onLogin.bind(this)}&gt;Login&lt;/Button&gt;
+                    &lt;/section&gt;
+                &lt;/Panel&gt;
+                &lt;Panel className='main'&gt;
+                    &lt;img src='/Static/maccode.jpg' className='left' /&gt;
+                    &lt;section className='right'&gt;
+                    &lt;h4&gt;Register now&lt;/h4&gt;
+                        &lt;Input ref='r_user' label='Nickname' floatingLabel={true} required={true} /&gt;
+                        &lt;Input ref='r_nick' label='Username' floatingLabel={true} required={true} /&gt;
+                        &lt;Input type='password' ref='r_pass_1' label='Password' floatingLabel={true} required={true} /&gt;
+                        &lt;Input type='password' ref='r_pass_2' label='Password Repeat' floatingLabel={true} required={true} /&gt;
+                        &lt;section className='mui-form--inline'&gt;
+                            &lt;Input ref='r_veri' label='Verify Code' floatingLabel={true} required={true} /&gt;
+                            &lt;img ref='r_vimg' src={this.state.vimg} onClick={this.verifyClick.bind(this)} /&gt;
+                        &lt;/section&gt;
+                        &lt;Button onClick={this.onRegister.bind(this)}&gt;Register&lt;/Button&gt;
+                    &lt;/section&gt;
+                &lt;/Panel&gt;
+                &lt;Panel&gt;
+                    Power by SpringHack
+                &lt;/Panel&gt;
+            &lt;/Container&gt;
+        );
+    }
+    onSubmit() {
+        return false;
+    }
+    onLogin() {}
+    onRegister() {}
+    verifyClick() {
+        this.setState({
+            vimg : `/${new Date()}/ValidationCode`
+        });
+    }
+}
+
+ReactDOM.render(&lt;App /&gt;, document.body);
+</code></pre><blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">还有index.less的代码：</p></blockquote><pre style="margin-top: 0.95em; margin-bottom: 0.95em; padding: 1em; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 13px; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; line-height: 19px; overflow: auto; border-radius: 3px; width: 656.75px; white-space: pre-wrap; color: rgb(51, 51, 51); background: rgb(248, 248, 248);"><code style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 1em; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; color: rgb(65, 65, 65); white-space: inherit; border-radius: 2px; word-break: break-all; background: 0px center;">body {
+    font-family: &quot;Comic Sans MS&quot;, &quot;YouYuan&quot;, &quot;STXihei&quot;, sans-serif;
+    background-image: url(/Static/back.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    .header {
+        h2 {
+            display: inline-block;
+        }
+        .login {
+            float: right;
+            width: 40%;
+        }
+    }
+    .main {
+        padding: 0px;
+        .left {
+            float: left;
+            padding: 0px;
+            width: 60%;
+        }
+        .right {
+            float: right;
+            padding: 20px;
+            width: 40%;
+        }
+   
+
+    }
+}</code></pre>

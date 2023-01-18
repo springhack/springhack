@@ -1,0 +1,13 @@
+
+
+<p>You can multiply numbers with modulo less than&nbsp;10<sup>12</sup>&nbsp;using&nbsp;<em>O</em>(1)&nbsp;operations.</p>
+
+<pre>
+<code>long long multiply(long long a,long long b,long long m)
+{
+    long long a1=a&gt;&gt;20;
+    long long a2=a&amp;1048575;
+    long long b1=b&gt;&gt;20;
+    long long b2=b&amp;1048575;
+    return (a2*b2 + ((a1*b2+a2*b1)&lt;&lt;20) + ((a1*b1&lt;&lt;20)%m&lt;&lt;20))%m;
+}</code></pre>

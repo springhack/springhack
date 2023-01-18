@@ -1,0 +1,109 @@
+
+
+<p>咦？我为什么要说又？不管了，反正是个轮子。。。</p>
+
+<p>主要吧就是我嫌用Redux太墨迹了，所以造了这个轮子，方便自己隔应他人(23333...)</p>
+
+<p>说来简单，Flux是什么我就不解释了，直接贴(<u>图</u>)：</p>
+
+<pre>
+<code>  ╔═════════╗       ╔════════╗       ╔═════════════════╗
+  ║ Actions ║──────&gt;║ Stores ║──────&gt;║ View Components ║
+  ╚═════════╝       ╚════════╝       ╚═════════════════╝
+       ^                                      \
+       └──────────────────────────────────────┘
+
+  注意：图片仅仅是FLUX思想，而不是Facebook的实现。</code></pre>
+
+<p>妈个鸡这不是图片，我个骗纸T_T。。。</p>
+
+<p>不管了，我的模块叫做Alux，就是Alxw和Flux各取俩字母啦啦啦～～～</p>
+
+<p>简单看下我的Demo，说实话除了Demo我的Readme什么都没写2333...</p>
+
+<pre>
+<code class="language-javascript">//Import module
+import Alux from 'alux';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+//Define events
+let events = {
+  CHANGE_NAME : Symbol()
+};
+
+//Combine reducers
+let reducers = Alux.combineReducers({
+  change(action, state = {name:'Alxw'}) {
+    switch (action.type)
+    {
+      case events.CHANGE_NAME:
+        let ret = Object.assign({}, state);
+        ret.name = action.name;
+        return ret;
+      break;
+      default:
+        return state;
+      break;
+    }
+  }
+});
+
+//Create store
+let store = Alux.createStore(reducers);
+
+//Combine actions
+let actions = Alux.combineActions({
+  change() {
+    return {
+      type : events.CHANGE_NAME,
+      name : 'SpringHack'
+    }
+  }
+}, store);
+
+//Connect react component
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    store.connect(this);
+  }
+  render() {
+    return (
+        &lt;div&gt;
+            I love {this.state.alux.change.name} !&lt;br /&gt;
+            &lt;button onClick={actions.change}&gt;Change&lt;/button&gt;
+        &lt;/div&gt;
+    );
+  }
+}
+
+//Render component
+ReactDOM.render(&lt;App /&gt;, document.getElementById('container'));</code></pre>
+
+<p>我想说，是不是简单了好多的样子？其实模块就导出了三个方法：cerateStore, combineReducers, combineActions。</p>
+
+<p>其中Store的实例有两个方法，一个connect一个dispatch，不过combineActions的时候传入了Store的实例，之后就不需要在调用分发事件的方法了。当然，你也可以直接用：</p>
+
+<pre>
+<code class="language-javascript">store.dispatch({
+  type : CHANGE_NAME,
+  name : 'SpringHack'
+});</code></pre>
+
+<p>这种形式就是不太好而已。。。</p>
+
+<p>每个reducer有自己的namespace，和redux类似。当然如果创建store实例的时候传入的reducer是纯函数就没有namespace了哦。</p>
+
+<p>默认对state做更改，在this.state.alux下面，使用react的setState方法，所以要不要更新，自己在shouldComponentUpdate判断下吧，我这里懒得写了－－</p>
+
+<p>创建Store实例的时候，可以传入纯函数的Reducer，也可以是组合的Reducers，但是不能够是多个Reducers再次组合（我想此刻肯定有人去试手了。。。）</p>
+
+<p>怎么说，就是Redux自己用的不爽而已，造个轮子自己也能加深印象。代码在Github，ES2015用babel编译的。</p>
+
+<p>哦，对了，发布到npmjs.com（<a href="https://www.npmjs.com/package/alux" target="_blank">https://www.npmjs.com/package/alux</a>）了，可以直接：</p>
+
+<pre>
+<code class="language-bash">npm install alux</code></pre>
+
+<p>来安装了哦～～～</p>

@@ -1,0 +1,35 @@
+
+
+<blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px 0px 10px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">原理：</p><ol style="margin: 10px 0px 0px; padding: 0px 0px 0px 30px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;"><li style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; word-wrap: break-word;">有数组A[n]，随机数 x 符合0 &lt;= x &lt; n，将A[x]和A[n - 1]对换；</li><li style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; word-wrap: break-word;">n--，当n&gt;1时重复上述步骤。</li></ol></blockquote><blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">代码：</p></blockquote><pre style="margin-top: 0.95em; margin-bottom: 0.95em; padding: 1em; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 13px; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; line-height: 19px; overflow: auto; border-radius: 3px; width: 656.75px; white-space: pre-wrap; color: rgb(51, 51, 51); background: rgb(248, 248, 248);"><code style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 1em; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; color: rgb(65, 65, 65); white-space: inherit; border-radius: 2px; word-break: break-all; background: 0px center;">&quot;use strict&quot;;
+
+var a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+
+const shuffle = arr =&gt; {
+    let n = arr.length;
+    while (n &gt; 1)
+    {
+        let x = Math.round(Math.random() * (n - 1));
+        if (x != n - 1)
+        {
+            arr[x] = arr[x] + arr[n - 1];
+            arr[n - 1] = arr[x] - arr[n - 1];
+            arr[x] = arr[x] - arr[n - 1];
+        }
+        --n;
+    }
+    return arr;
+};
+
+console.log(shuffle(a));
+</code></pre><blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">验证代码：</p></blockquote><pre style="margin-top: 0.95em; margin-bottom: 0.95em; padding: 1em; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 13px; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; line-height: 19px; overflow: auto; border-radius: 3px; width: 656.75px; white-space: pre-wrap; color: rgb(51, 51, 51); background: rgb(248, 248, 248);"><code style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 1em; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; color: rgb(65, 65, 65); white-space: inherit; border-radius: 2px; word-break: break-all; background: 0px center;">const MAX = 1000000;
+
+var b = Array(10).fill(0);
+
+for (let i=0;i&lt;MAX;++i)
+{
+    shuffle(a);
+    b = b.map((x, i) =&gt; x + a[i]);
+}
+
+console.log(b.map(x =&gt; x/MAX));
+</code></pre><blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px 0px 10px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">数学归纳法证明：</p><ol style="margin: 10px 0px; padding: 0px 0px 0px 30px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;"><li style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; word-wrap: break-word;">假设2个数，那么每个数在每个位置的概率都是1/2;</li><li style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; word-wrap: break-word;">假设n个数，那么每个数在最后的位置的概率是1/n，不在的概率是(n-1)/n;</li><li style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; word-wrap: break-word;">n＋1个数的时候，那么每个数在最后的概率是1/(n+1)，不在的概率是n/(n+1)，假设不在，对于前n个数在前n个数的最后的概率由2知为1/n，即概率是n/(n+1)</li></ol><ul style="margin: 10px 0px; padding: 0px 0px 0px 30px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;"><li style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; word-wrap: break-word;">1/n = 1/(n+1);</li></ul><ol start="4" style="margin: 10px 0px 0px; padding: 0px 0px 0px 30px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;"><li style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; word-wrap: break-word;">由上可证每个数在每个位置的概率相等为总数分之一.</li></ol></blockquote>

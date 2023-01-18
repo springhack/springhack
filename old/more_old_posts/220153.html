@@ -1,0 +1,127 @@
+
+
+<p>上课了上课了啊，都回到自己的座位去。科科，今天我们来讲讲开发一个Online Judge系统的若干重点。</p>
+
+<p>不过在这之前，还是先来明确下Online Judge是个什么东西吧－－</p>
+
+<p><a href="http://baike.baidu.com/link?url=VCunGX5F0eBmop69ekrGgG89YnpaiTx-1yKIDQQlcDJsvj8sYo_gcgtn5JYcVm5lvO1s_KzgvosSMNWsGhyS1Ae_ent2F2oO1DwFl-dPmS3" target="_blank">这是个百度百科的连接</a>：Online Judge系统（简称OJ）是一个在线的判题系统。用户可以在线提交程序多种程序（如C、C++、Pascal）源代码，系统对源代码进行编译和执行，并通过预先设计的测试数据来检验程序源代码的正确性。</p>
+
+<p>在我之前的几篇文章里，已经提到了几处开发重点。今天我想着重讲下程序占用的内存和时间的获取，顺便讲下安全性。</p>
+
+<p><u><strong>时间篇：</strong></u></p>
+
+<p style="margin-left: 40px;">其实时间是比较容易获取的。那些评测核心逻辑上的结构我就不讲了，无非是队列＋线程搞个生产者/消费者问题。没学好的，我觉得你可以回头看看你的课本，操作系统里讲的概念。</p>
+
+<p style="margin-left: 40px;">这里要说的是几个系统调用和宏，时间的获取其实非常简单。这里我们用的是Linux平台，有一个结构体</p>
+
+<pre>
+<code class="language-cpp">struct rusage ru;</code></pre>
+
+<p style="margin-left: 40px;">他是用来存储程序运行时资源占用的。对应的，就有一个函数：</p>
+
+<pre>
+<code class="language-cpp">wait4(pid, &amp;status, WSTOPPED, &amp;ru);</code></pre>
+
+<p style="margin-left: 40px;">表示等待子进程进一步状态改变。那么显然的，我们这里等待WSTOPPED也就是子进程暂停。我的oj核心原来用了一个开源项目叫做Lo-runner，不过为了解决一些问题就对这个项目进行了大手术(参见我的GIthub)。对应的，在hustoj里面也是这样做到获取时间，不过他等待了 0 ，我想他想表达的是 NULL 吧，不明所以。为此我还特地翻阅了内核源码定义，自行参考吧：</p>
+
+<pre>
+<code class="language-cpp">/* Definitions of flag bits for `waitpid' et al.
+   Copyright (C) 1992,1996,1997,2000,2004,2005 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
+
+#if !defined _SYS_WAIT_H &amp;&amp; !defined _STDLIB_H
+# error "Never include &lt;bits/waitflags.h&gt; directly; use &lt;sys/wait.h&gt; instead."
+#endif
+
+
+/* Bits in the third argument to `waitpid'.  */
+#define	WNOHANG		1	/* Don't block waiting.  */
+#define	WUNTRACED	2	/* Report status of stopped children.  */
+
+/* Bits in the fourth argument to `waitid'.  */
+#define WSTOPPED	2	/* Report stopped child (same as WUNTRACED). */
+#define WEXITED		4	/* Report dead child.  */
+#define WCONTINUED	8	/* Report continued child.  */
+#define WNOWAIT		0x01000000 /* Don't reap, just poll status.  */
+
+#define __WNOTHREAD     0x20000000 /* Don't wait on children of other threads
+				      in this group */
+#define __WALL		0x40000000 /* Wait for any child.  */
+#define __WCLONE	0x80000000 /* Wait for cloned process.  */</code></pre>
+
+<p style="margin-left: 40px;">不过，继续说，ru里面可以获取到时间，四个成员需要加在一起：</p>
+
+<pre>
+<code class="language-cpp">rst-&gt;time_used = ru.ru_utime.tv_sec * 1000
+        + ru.ru_utime.tv_usec / 1000
+        + ru.ru_stime.tv_sec * 1000
+        + ru.ru_stime.tv_usec / 1000;</code></pre>
+
+<p><u><strong>内存篇：</strong></u></p>
+
+<p style="margin-left: 40px;">说到内存，真是虐我千百遍。之前一直是靠</p>
+
+<pre>
+<code class="language-cpp">ru.ru_maxrss;</code></pre>
+
+<p style="margin-left: 40px;">这个方法获取的内存，谁知道根本不好用。更准确的说，oj的评判标准不同，方案也就不同。Linux的内存本来就坑特别多，简直头大。不过最后，我还是改写了Lo-runner，按照hustoj的内存获取方案，最后结果和hustoj的差不多</p>
+
+<p style="margin-left: 40px;">（这里解释两点：</p>
+
+<p style="margin-left: 80px;">1. 都该写了为毛不直接重写：因为我懒。这是个python库，他原来的接口写的挺好，所以懒得再重写，不过这里有个大坑。。。</p>
+
+<p style="margin-left: 80px;">2. 为毛用hustoj的方案：废话嘛用的多，认可度比较高。。。</p>
+
+<p style="margin-left: 40px;">）。</p>
+
+<p style="margin-left: 40px;">那么，为什么说虐我千百遍呢？因为，我发现Lo-runner用的是vfork，比直接fork检测内存要感人很多(这个我大概有个理解，在这里就不说了)。不仅如此，你知道的，python的内存。。。简直感人。。。子进程检测内存的时候，会检测到exec*之前python的内存，然后，出奇的大。。。目前为止我只能把内存降低到一个限度。方法？我评测时用独立的进程，之间我用unix socket通信－－。详情？看源码咯0.0</p>
+
+<p style="margin-left: 40px;"><a href="https://github.com/springhack/Lo-runner/blob/master/lorun/cext/run.c" target="_blank">这里放个链接就可以了，呃嗯。。。</a></p>
+
+<p><u><strong>安全性篇：</strong></u></p>
+
+<p style="margin-left: 40px;">安全性，其实并不想讲太多。沙盒，虚拟化，各种，都是釜底抽薪的办法。总的来说，对于编译型语言(我指的是C/C++，嗯。。。)，首先要拦截系统调用，对 ptrace ，慢慢用就好了；其次才是各种釜底抽薪的办法，简单的用chroot或者沙盒，复杂点就用docker啊，各种虚拟化啊，都是一样的。。。看源码说话：</p>
+
+<pre>
+<code class="language-cpp">if (ptrace(PTRACE_GETREGS, pid, NULL, &amp;regs) == -1)
+            RAISE_RUN("PTRACE_GETREGS failure");
+        if (incall &amp;&amp; runobj-&gt;trace &amp;&amp; !runobj-&gt;java)
+        {
+            int ret = checkAccess(runobj, pid, &amp;regs);
+            if (ret != ACCESS_OK)
+            {
+                ptrace(PTRACE_KILL, pid, NULL, NULL);
+                waitpid(pid, NULL, 0);
+
+                rst-&gt;judge_result = RE;
+                if (ret == ACCESS_CALL_ERR) {
+                    rst-&gt;re_call = REG_SYS_CALL(&amp;regs);
+                } else {
+                    rst-&gt;re_file = lastFileAccess();
+                    rst-&gt;re_file_flag = REG_ARG_2(&amp;regs);
+                }
+                return 0;
+            }
+            incall = 0;
+        } else
+            incall = 1;
+        ptrace(PTRACE_SYSCALL, pid, NULL, NULL);</code></pre>
+
+<p><u><strong>总结篇：</strong></u></p>
+
+<p style="margin-left: 40px;">总结就是，实践是第一生产力－－，嗯。。。</p>

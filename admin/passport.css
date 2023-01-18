@@ -1,0 +1,44 @@
+html {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+input, button, .dosk {
+  padding: 7px;
+  font-size: 15px;
+  border-radius: 20px;
+  margin: 20px 0 20px 0 !important;
+}
+
+input {
+  text-align: center;
+}
+
+#loading{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  z-index: 1;
+  opacity: 0.8;
+  display: none;
+}
+
+#loading-circle {
+  position: fixed;
+  z-index: 1;
+  margin: 0 auto;
+  left: 0;
+  top: calc(50vh - 35px);
+  right: 0;
+  width: 70px;
+  height: 70px;
+  opacity: 0.8;
+}

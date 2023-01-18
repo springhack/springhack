@@ -1,0 +1,17 @@
+
+
+<p>在写这个后台管理的时候，并没有找到什么好用的编辑器，临时用了ckeditor。但是熟悉ReactJS的人都知道，ReactJS是不建议直接操作DOM的（但是保留了方法）。</p>
+
+<p>所以这里简单说下如何用这类富文本编辑器。</p>
+
+<p>1. 首先是定义ReactJS组件，render方法中返回一个&lt;textarea&gt;，id设置为content；</p>
+
+<p>2.&nbsp;componentDidMount里调用&nbsp;CKEDITOR.replace(&#39;content&#39;); 来初始化editor；</p>
+
+<p>3. 最关键的是卸载组件的时候，也就是&nbsp;componentWillUnmount&nbsp;。我们知道ReactJS在卸载组件的时候，如果遇到其他一些不是它创建的东西，会造成不可预期的后果。通过观察我们发现，ckeditor中最外层的节点是 &#39;cke_&#39; + id 组成的，这里也就是 cke_content ，我们只要移除这个节点就OK了。不过在测试中发现，外层用Router等组件的时候会造成一些错误，所以这里要catch一下错误，如下：</p>
+
+<p>document.getElementById(&#39;cke_content&#39;).remove();</p>
+
+<p>如此就能够调用ckeditor了。</p>
+
+<p>所以，通用方案就是，componentDidMount 做普通DOM操作，componentWillUnmount 做清理工作，可以参考下这个后台管理的源码－－&nbsp;</p>

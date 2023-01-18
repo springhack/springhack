@@ -1,0 +1,75 @@
+
+
+<p>Github Pages是一个很好的服务，但是由于某些事件过后，他再也不能被百度抓取，这让很多人很恼火。</p>
+
+<p>首先，我说明下，我的博客在写这篇文章的时候，是测试不会403的。博客有两个网址，带www和不带www两种。由于我不带www的会自动跳转带www，所以我设置的是带www的能被抓取，不带的没管，测试指令如下：</p>
+
+<pre>
+<code class="language-bash">curl -A "Mozilla/5.0 (compatible; Baiduspider/2.0; +https://www.baidu.com/search/spider.html)" https://www.dosk.win/
+</code></pre>
+
+<p>很多方案，我就不一一说了，但是都不适合我，因为之前的文章中提到，博客的后台编辑器是强依赖Github API的，所以博客代码只能放在github上。但是国内的服务商Coding.Net提供几乎一样的服务（而且速度快咩哈哈），只不过这个编辑器不能被移植过去（她们提供的API同源策略的问题，可以在她们repo的谈论区看到我的issus）。</p>
+
+<p>有一种方案，可行，那就是，两个repo，当Github更新的时候，Coding.Net同步更新，想象很刺激，其实很简单，用一下WebHooks服务就OK了。</p>
+
+<p>这里你需要一个服务器，来接受WebHooks的请求。什么？还要服务器？那我还用GIthub Pages干嘛？科科，别着急，我告诉你，用OpenShift就OK了2333...</p>
+
+<p>怎么做？</p>
+
+<p>新建一个OpenShift应用，Node.js的，然后同步coding和github的项目，更改coding的config地址，加上user:pass@url，使他能够不验证密码就提交，再改改如下代码中关于你自己的配置就OK：</p>
+
+<pre>
+<code class="language-javascript">var express = require('express');
+var app = express();
+var exec = require('child_process').exec;
+var fs = require('fs');
+
+var pull = function (func) {
+	exec('cd github &amp;&amp; git pull', function () {
+		console.log('Pulled...');
+		func();
+	});
+}
+
+var deploy = function () {
+	console.log('Starting deploy...');
+	pull(function () {
+		exec('rm -rf coding/* &amp;&amp; cp -rf github/* coding/', function () {
+			console.log('Deleted and copied...');
+			exec('cd coding &amp;&amp; git add --all &amp;&amp; git commit -m "update" &amp;&amp; git push', function () {
+				console.log('Deploy finished !');
+			})
+		});
+	});
+};
+
+app.post('/webhooks', require('body-parser').json(), function (req, res) {
+	setTimeout(function () {
+		if (!fs.existsSync('github'))
+			exec('git clone https://github.com/springhack/springhack.github.io github', function () {
+				console.log('Github cloned.')
+				if (!fs.existsSync('coding'))
+					exec('git clone https://git.coding.net/springhack/springhack.git coding', function () {
+						console.log('Coding cloned.')
+						deploy()
+					});
+				else
+					deploy();
+			});
+		else
+			deploy();
+	}, 0);
+	res.end('');
+});
+
+app.listen(parseInt(process.env.OPENSHIFT_NODEJS_PORT), process.env.OPENSHIFT_NODEJS_IP);</code></pre>
+
+<p>相信你能看懂吧！然后相应的，把地址加到github的webhooks里面，再把CNAME设置为coding的配置，OK，搞定！</p>
+
+<p>我的博客github repo：<a href="https://github.com/springhack/springhack.github.io" target="_blank">https://github.com/springhack/springhack.github.io</a></p>
+
+<p>我的博客coding repo：<a href="https://coding.net/u/springhack/p/springhack/git" target="_blank">https://coding.net/u/springhack/p/springhack/git</a></p>
+
+<p>你可以试试ping看看IP，dosk.win和www.dosk.win是不同的，而且后者能够完美通过curl的测试～</p>
+
+<p>&nbsp;</p>

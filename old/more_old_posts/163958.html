@@ -1,0 +1,65 @@
+
+
+<p style="margin: 10px 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(51, 51, 51); font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><span style="line-height: 22.4px;">其实就是，我所有代码都在~/Public里面，本机开nfs，虚拟机挂载nfs到/opt，酱紫我直接启动虚拟机就好，环境都部署在虚拟机中，因为，我OCD晚期…Orz…</span></p><p style="margin: 10px 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(51, 51, 51); font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;">写了个脚本自动启动虚拟机然后ssh过去，这个脚本，写的真心虐…</p><p style="margin: 10px 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(51, 51, 51); font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;">这里是代码:</p><pre style="margin-top: 0.95em; margin-bottom: 0.95em; padding: 1em; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 13px; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; line-height: 19px; overflow: auto; border-radius: 3px; width: 656.75px; white-space: pre-wrap; color: rgb(51, 51, 51); background: rgb(248, 248, 248);"><code style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 1em; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; color: rgb(65, 65, 65); white-space: inherit; border-radius: 2px; word-break: break-all; background: 0px center;">#!/bin/bash
+
+TMP=`mktemp`
+TMP2=`mktemp`
+TMP3=`mktemp`
+TMP4=`mktemp`
+
+VBoxManage list vms | awk -F \&quot; '{print $2}' &gt; $TMP
+
+ORDER=1
+
+while read LINE
+do
+    echo $ORDER. $LINE
+    echo &quot;export ORDER_${ORDER}=\&quot;${LINE}\&quot;&quot; &gt;&gt; $TMP2
+    ORDER=`expr $ORDER + 1`
+done &lt; $TMP
+
+source $TMP2
+
+rm $TMP
+rm $TMP2
+
+read CHOICE
+
+echo CH=\$ORDER_$CHOICE &gt; $TMP3
+
+source $TMP3
+
+rm $TMP3
+
+echo &quot;Choose $CH, start it right now !&quot;
+
+VBoxHeadless -startvm &quot;$CH&quot; &gt;/dev/null 2&gt;&amp;1 &amp;
+
+b=''
+for ((i=0;$i&lt;=100;i+=2))
+do
+    printf &quot;Starting vm: [%-50s]%d%%\r&quot; $b $i
+    sleep 0.07
+    b=#$b
+done
+echo
+
+OUT=`( time -p; ) 2&gt;&amp;1 | grep real | awk -F ' ' '{print $2}' | awk -F '.' '{print $1}'`
+RCOUNT='=&gt;'
+
+while [ &quot;$OUT&quot; -lt &quot;3&quot; ];
+do
+    printf &quot;Trying: %s\r&quot; $RCOUNT
+    RCOUNT='='$RCOUNT
+    ( time -p ssh springhack@127.0.0.1 -p 10022; ) 2&gt;$TMP4
+    sleep 2.5
+    OUT=`cat $TMP4 | grep real | awk -F ' ' '{print $2}' | awk -F '.' '{print $1}'`
+done
+
+rm $TMP4
+
+VBoxManage controlvm &quot;$CH&quot; poweroff
+
+pkill VBox*
+
+echo Finished !</code></pre>

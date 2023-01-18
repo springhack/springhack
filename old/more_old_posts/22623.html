@@ -1,0 +1,77 @@
+
+
+<pre>
+<code>因为去年校赛遇到了，今年的Astar也遇到了，于是上网搜索了资料记下了这么简单的O(n)算法，科科。原理上一知半解，回头再好好理解理解吧。
+这里求
+</code></pre>
+
+<blockquote>
+<p>1,2,...,p-1 mod p</p>
+</blockquote>
+
+<pre>
+<code>的逆元，设
+</code></pre>
+
+<blockquote>
+<p>p = k*i + r (k = p/i, r = p%i)</p>
+</blockquote>
+
+<pre>
+<code>即有
+</code></pre>
+
+<blockquote>
+<p>k*i + r &equiv; 0 (mod p)</p>
+</blockquote>
+
+<pre>
+<code>两边同时乘
+</code></pre>
+
+<blockquote>
+<p>(i^-1)*(r^-1)</p>
+</blockquote>
+
+<pre>
+<code>得
+</code></pre>
+
+<blockquote>
+<p>k*(r^-1) + (i^-1) &equiv; 0 (mod p)</p>
+</blockquote>
+
+<pre>
+<code>即
+</code></pre>
+
+<blockquote>
+<p>(i^-1) &equiv; -k*(r^-1) (mod p)</p>
+</blockquote>
+
+<pre>
+<code>此时将
+</code></pre>
+
+<blockquote>
+<p>k = p/i, r = p%i</p>
+</blockquote>
+
+<pre>
+<code>带入，得
+</code></pre>
+
+<blockquote>
+<p>(i^-1) = -(p/i)*((p%i)^-1)</p>
+</blockquote>
+
+<pre>
+<code>若将x^-1化成数组NI[x]就是代码：
+</code></pre>
+
+<blockquote>
+<p>NI[i] = -(p/i)*NI[p%i];</p>
+</blockquote>
+
+<pre>
+<code>还有就是可以简化到O(logp)得复杂度，但是那个我暂时还没想通，所以这里也不丢人0.0</code></pre>

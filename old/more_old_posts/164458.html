@@ -1,0 +1,116 @@
+
+
+<blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">第四题乍看是个简单的背包问题，其实数据范围很大，但是每个物品的价值1&lt;=p[i]&lt;=10，所以可以按照物品的价值分类物品，酱紫就变成最多M价值，多个物品(能计算)，每个物品个数也能计算，每个物品有价值，变成成多重背包，直接套模板，题解略。</p></blockquote><blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">第二题二分搞定－－</p></blockquote><blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">第三题我的想法是高斯消元，但是最后时间没够，而且程序有bug。<br style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;" />补充别人的高斯消元代码，和我思路一致，我的高斯消元模板有bug，以后决定用这个了，代码来自：<a href="http://blog.csdn.net/zz490396674/article/details/52267009" style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(245, 146, 0); text-decoration: none; transition: all 0.24s; overflow: hidden; text-overflow: ellipsis; word-spacing: normal; word-break: break-word; word-wrap: break-word;">hihocoder1363 图像算子</a></p></blockquote><pre style="margin-top: 0.95em; margin-bottom: 0.95em; padding: 1em; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 13px; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; line-height: 19px; overflow: auto; border-radius: 3px; width: 656.75px; white-space: pre-wrap; color: rgb(51, 51, 51); background: rgb(248, 248, 248);"><code style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 1em; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; color: rgb(65, 65, 65); white-space: inherit; border-radius: 2px; word-break: break-all; background: 0px center;">#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;algorithm&gt;
+#include&lt;math.h&gt;
+using namespace std;
+#define maxN 105
+#define maxn 5000
+#define maxm 5000
+int h,w,d;
+int a[maxN][maxN];
+int b[maxN][maxN];
+
+#define eps 1e-9
+double Mat[maxn][maxm];
+double V[maxn];
+void Gasse(int n,int m)
+{
+    int k=0,i,j;
+    for(j=0;j&lt;m;j++)
+    {
+        for(i=k;i&lt;n;i++){
+            if(fabs(Mat[i][j])&gt;eps)
+                break;
+        }
+        if(i==n) continue;
+        
+        for(int p=0;p&lt;m;p++) swap(Mat[i][p],Mat[k][p]);
+        swap(V[i],V[k]);
+        
+        double tem=Mat[k][j] ;
+        for(int p=j;p&lt;m;p++) Mat[k][p]/=tem;
+        V[k]/=tem;
+        
+        for(int p=0;p&lt;n;p++){
+            if(p!=k&amp;&amp;(fabs(Mat[p][j])&gt;eps)){
+                tem=Mat[p][j];
+                for(int q=0;q&lt;m;q++)Mat[p][q]-=tem*Mat[k][q];
+                V[p]-=tem*V[k];
+            }
+        }
+        k++;
+    }
+}
+
+int main()
+{
+    scanf(&quot;%d%d%d&quot;,&amp;h,&amp;w,&amp;d);
+    for(int i=0;i&lt;h;i++)
+        for(int j=0;j&lt;w;j++) scanf(&quot;%d&quot;,&amp;a[i][j]);
+    for(int i=0;i&lt;h-d+1;i++)
+        for(int j=0;j&lt;w-d+1;j++) scanf(&quot;%d&quot;,&amp;b[i][j]);
+    int r=0;
+    for(int i=0;i&lt;h-d+1;i++)
+        for(int j=0;j&lt;w-d+1;j++){
+            for(int p=0;p&lt;d;p++)
+                for(int q=0;q&lt;d;q++)
+                    Mat[r][p*d+q]=a[i+p][j+q];
+            V[r]=b[i][j];
+            r++;
+        }
+    Gasse(r,d*d);
+    for(int i=0;i&lt;d*d;i++){
+        if(i%d!=0) printf(&quot; &quot;);
+        if(V[i]&gt;-1e-6) printf(&quot;%.0f&quot;,(V[i]+1e-6));
+        else printf(&quot;%.0f&quot;,(V[i]-1e-6));
+        if(i%d==d-1) printf(&quot;\n&quot;);
+    }
+}
+</code></pre><blockquote style="margin: 20px 0px; padding: 0px 20px; border-width: 0px 0px 0px 4px; border-left-style: solid; border-left-color: rgb(76, 175, 80); box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; color: rgb(119, 119, 119); position: relative; width: 656.75px; font-family: Exo, -apple-system, &quot;Open Sans&quot;, HelveticaNeue-Light, &quot;Helvetica Neue Light&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22.4px;"><p style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased;">第一题太水，直接上代码：</p></blockquote><pre style="margin-top: 0.95em; margin-bottom: 0.95em; padding: 1em; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 13px; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; line-height: 19px; overflow: auto; border-radius: 3px; width: 656.75px; white-space: pre-wrap; color: rgb(51, 51, 51); background: rgb(248, 248, 248);"><code style="margin: 0px; padding: 0px; border: 0px; box-sizing: border-box; -webkit-font-smoothing: subpixel-antialiased; font-size: 1em; font-family: inconsolata, Consolas, monospace, sans-serif; word-wrap: break-word; color: rgb(65, 65, 65); white-space: inherit; border-radius: 2px; word-break: break-all; background: 0px center;">/**
+        Author: SpringHack - springhack@live.cn
+        Last modified: 2016-08-21 12:02:27
+        Filename: main.cpp
+        Description: Created by SpringHack using vim automatically.
+**/
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+
+
+
+int main()
+{
+    int w[26];
+    char ret[25], str[300];
+    for (int i=0;i&lt;26;++i)
+        w[i] = 1; 
+    cin &gt;&gt; str;
+    int p = 0;
+    for (int i=0;i&lt;strlen(str);++i)
+    {
+        if (w[str[i] - 'A'] == 0 || str[i] == 'J')
+        {
+            //NNN
+        } else {
+            ret[p++] = str[i];
+            w[str[i] - 'A'] = 0;
+        }
+    }
+    for (int i=0;i&lt;26;++i)
+    {
+        if (w[i] == 1 &amp;&amp; (i + 'A') != 'J')
+            ret[p++] = (i + 'A');
+    }
+    for (int i=0;i&lt;5;++i)
+    {
+        for (int j=0;j&lt;5;++j)
+            cout &lt;&lt; ret[i*5+j];
+        cout &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>

@@ -1,0 +1,3 @@
+
+
+<span style="color: rgb(51, 51, 51); font-family: 'Noto Serif', serif; font-size: 19px; line-height: 31.9998px;">&nbsp; &nbsp;很多机油把自己的Android手机root后不能用RootExplorer复制文件到/system分区，即使是挂载为读写模式了，本人也是这种情况，经仔细研究发现，网上的挂载命令是mount -o remount /dev/block/mtdblock0 /system而我的手机里/system分区挂载的是/dev/stl12,所以问题就明了了，RootExplorer挂载的也是个网上一样的。所以我的手机，应该是mount -o remount,rw -t yaffs2 /dev/stl12 /system，当然，依你的手机的具体情况来定。我的手机型号是三星Galaxy mini GT-S5570。</span>

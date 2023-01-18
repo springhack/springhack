@@ -1,0 +1,41 @@
+
+
+<p>先上个图－－</p>
+
+<p><img alt="" src="https://ww2.sinaimg.cn/mw690/7eb49035jw1fa92tgnqgcj20k00zk0vp.jpg" style="height:1227px; width:690px" /></p>
+
+<p>别问我咋想的，我也不知道我咋想的，虐心玩？游戏玩法不说了－－</p>
+
+<p>呐呐，js写的，手机浏览器访问，建议用Android封装一下如上图那种－－</p>
+
+<p>代码大概酱紫：</p>
+
+<pre>
+<code class="language-java">package com.springhack.snakemine;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.webkit.WebView;
+
+public class MainActivity extends AppCompatActivity {
+
+    private WebView web;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        web = (WebView)findViewById(R.id.web);
+        web.getSettings().setJavaScriptEnabled(true);
+        web.loadUrl("http://snake.dosk.win/");
+
+    }
+}
+</code></pre>
+
+<p>Github了，应该还有bug不过不准备虐心改它了－－</p>
+
+<p>传送门：<a href="https://github.com/springhack/SnakeMine" target="_blank">https://github.com/springhack/SnakeMine</a></p>
+
+<p>啊咧，吃饭去－－&nbsp;</p>

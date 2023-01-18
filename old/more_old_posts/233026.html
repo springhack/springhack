@@ -1,0 +1,35 @@
+
+
+
+
+<pre class="prettyprint lang-cpp linenums"><pre class="prettyprint lang-cpp linenums">#define MODE_VGA13H  0×13
+#define MODE_TEXT       0×03
+void setmode(char mode)      //设置视频模式的函数
+{
+    asm mov ah,0x00    //调用00h功能设置视频模式
+    asm mov al,mode    //AL寄存器放欲设置的视频模式号，这里以13h视频模式为例
+    asm int    0x10        //调用10h中断
+}
+char far * vediobuf=(char far*)0xa0000000L;    //指向显存地址的指针
+void putpixel(int x,int y,int c)    //画点的函数
+{
+    *(vediobuf+x+320*y)=c;
+}
+int getpixel(int x,int y)              //取点的函数
+{
+    return *(vediobuf+x+320*y);
+}
+void main(void)
+{
+    int i;
+    int j;
+    //设置VGA13H视频模式
+    setmode(MODE_VGA13H);
+    //用一个二重循环画满屏幕
+    for(i=0;i<20;i++)
+        for(j=0;j<320;j++)
+            putpixel(j,i,j);
+    getch();
+    //返回DOS文本模式
+    setmode(MODE_TEXT);
+}</pre><pre class="prettyprint lang-cpp linenums"></pre></pre>

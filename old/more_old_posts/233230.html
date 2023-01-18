@@ -1,0 +1,32 @@
+
+
+<h2>{{ page.title }}</h2>
+
+<pre class="prettyprint lang-cpp linenums"><pre class="prettyprint lang-cpp linenums"><pre class="prettyprint lang-vb linenums">Private Declare Function ReleaseCapture Lib “user32″ () As Long 
+Private Declare Function SetWindowPos Lib “user32.dll” (ByVal lhwnd As Long, ByVal hWndInsertAfter As Long, ByVal swpX As Long, ByVal swpY As Long, ByVal cX As Long, ByVal cY As Long, ByVal wFlags As Long) As Long 
+Private Declare Function SetWindowRgn Lib “user32″ (ByVal hwnd As Long, ByVal hRgn As Long, ByVal bRedraw As Boolean) As Long 
+Private Declare Function SendMessage Lib “user32″ Alias “SendMessageA” (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Integer, ByVal lParam As Long) As Long 
+Const WM_NCLBUTTONDOWN = &amp;HA1 
+Const HTCAPTION = 2 
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single) 
+‘移动无边匡的窗体 
+Dim lngReturnValue As Long 
+If Button = 1 Then 
+Call ReleaseCapture 
+lngReturnValue = SendMessage(Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&amp;)
+End If 
+If Me.Left &gt;= Screen.Width – (Me.Width * 0.9) Then 
+Me.Left = Screen.Width – Me.Width 
+Else 
+If Me.Left &lt;= -(Me.Width * 0.1) Then 
+Me.Left = 0 
+End If 
+End If 
+If Me.Top &gt;= Screen.Height – (Me.Height * 0.9) Then 
+Me.Top = Screen.Height – Me.Height 
+Else 
+If Me.Top &lt;= -(Me.Height * 0.1) Then 
+Me.Top = 0 
+End If 
+End If 
+End Sub</pre></pre><pre class="prettyprint lang-cpp linenums"></pre></pre>

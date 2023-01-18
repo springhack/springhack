@@ -1,0 +1,53 @@
+
+
+
+
+<pre class="prettyprint lang-cpp linenums"><pre class="prettyprint lang-cpp linenums"><pre class="prettyprint lang-vb linenums"><pre class="prettyprint lang-vb linenums"><p style="font-size: 16px; vertical-align: baseline; color: rgb(51, 51, 51); font-family: Georgia, 'Bitstream Charter', serif;">以下为封好的 Delphi 类
+</p><pre class="prettyprint lang-vb linenums">type
+   TGetQQNumber = class
+qqlist: TStrings;
+   private
+procedure GetList(ClassName:String);
+   public
+constructor Create();
+destructor Destroy(); override;
+end;
+constructor TGetQQNumber.Create;
+begin
+   qqlist := TStringList.Create;
+//   Afx:61790000:2 为窗口类名
+   GetList(Afx:61790000:2);//QQ2006 STD
+   GetList(Afx:61800000:2);//QQ2007 Beta3
+   GetList(Afx:61810000:2);//按规律随意添加的,不知道对不对
+   GetList(Afx:61820000:2);//按规律随意添加的,不知道对不对
+   GetList(Afx:61830000:2);//按规律随意添加的,不知道对不对
+   GetList(Afx:61840000:2);//QQ2007 Beta4
+end;
+destructor TGetQQNumber.Destroy;
+begin
+   qqlist.Free;
+end;
+procedure TGetQQNumber.GetList(ClassName: String);
+var
+   Wnd: DWord;
+   Buf: array[0..255] of char;
+   i: integer;
+begin
+   Wnd := 0;
+   repeat
+Wnd := FindWindowEx(0, Wnd, pchar(ClassName), nil);
+GetWindowText(Wnd, Buf, 255);
+if buf <> then
+begin
+   for i := 0 to 255 do
+   begin
+       if Buf[i] = _ then
+       begin
+      Buf[i] := #0;
+      break;
+       end;
+   end;
+   qqlist.Add(buf);
+end;
+   until (Wnd = 0);
+end;</pre></pre></pre></pre><pre class="prettyprint lang-cpp linenums"></pre></pre>

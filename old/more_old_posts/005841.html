@@ -1,0 +1,33 @@
+
+
+<p>怎么解释这个问题的由来呢？</p>
+
+<p>是酱紫的。我python调用了一个c写的库，里面fork并且execvp，结果ptrace检测出来子进程占用的内存感人－－</p>
+
+<p>大概2128KB。然后，我写了这么段代码：</p>
+
+<pre>
+<code class="language-cpp">#include &lt;stdio.h&gt;
+
+#define MAX (1&lt;&lt;20)
+
+int main()
+{
+	int a[MAX], i;
+	for (i=0;i&lt;MAX;++i)
+		a[i] = i - 1;
+	return 0;
+}</code></pre>
+
+<p>已知的是int在我的机器上是32位即最大值2^31-1(2147483647)，静态编译。那么可猜想内存占用是4096KB以上，结果也是，得到了4904KB。但是如果进程小于2128KB占用，得到的永远是2128KB。</p>
+
+<p>所以一个猜想，是否是execvp重用了当前进城的内存空间了呢？（十分有这个可能吧！毕静Linux也不傻－－）</p>
+
+<p>深入追寻了execvp：</p>
+
+<pre>
+<code>execvp -&gt; execve -&gt; do_execve -&gt; do_execve_common -&gt; exec_binprm -&gt; search_binary_handler -&gt; load_elf_binary -&gt; start_thread</code></pre>
+
+<p>所以我猜测，这里的部分是独立分配的内存空间来load整个elf文件，并修改寄存器指针，然后内核并没有直接回收掉原来的进程占用的内存而是直接作为栈区指派给新的进程0.0（如果站在算法角度的话我也会这么干，这叫内存迭代－－）</p>
+
+<p>当然这只是猜测－－不过基本印证了我的猜测－－有谁来给我指点迷津啊－－</p>

@@ -1,0 +1,120 @@
+
+
+<h1 style="box-sizing: inherit; border: 0px; font-family: 'Noto Serif', serif; font-size: 3.9rem; margin: 0px 0px 0.8205em; outline: 0px; padding: 0px; vertical-align: baseline; clear: both; line-height: 1.2308; color: rgb(51, 51, 51);">单源最短路之Dijkstra算法:</h1><pre style="box-sizing: inherit; border: 1px solid rgba(51, 51, 51, 0.0980392); font-family: Inconsolata, monospace; font-size: 19px; margin-top: 0px; margin-bottom: 1.6842em; outline: 0px; padding: 0.8em; vertical-align: baseline; line-height: 1.2632; max-width: 100%; overflow: auto; white-space: pre-wrap; word-wrap: break-word; color: rgb(51, 51, 51); background-color: rgba(0, 0, 0, 0.00784314);"></pre><pre style="box-sizing: inherit; border: 1px solid rgba(51, 51, 51, 0.0980392); font-family: Inconsolata, monospace; font-size: 19px; margin-top: 0px; margin-bottom: 1.6842em; outline: 0px; padding: 0.8em; vertical-align: baseline; line-height: 1.2632; max-width: 100%; overflow: auto; white-space: pre-wrap; word-wrap: break-word; color: rgb(51, 51, 51); background-color: rgba(0, 0, 0, 0.00784314);">Program sksks;
+Var
+	n,s,i,j:longint;
+	f:array[1..1024,1..1024] of longint;
+
+Procedure Dijkstra(s,n:longint);
+Var
+	i,j,min,p:longint;
+	vis:array[1..1024] of boolean;
+	d:array[1..1024] of longint;
+Begin
+	fillchar(vis,sizeof(vis),0);
+	for i:=1 to n do
+		if f[s,i]=0
+			then d[i]:=MaxLongInt div 10
+			else d[i]:=f[s,i];	
+	d[s]:=0;
+	vis[s]:=true;
+	for i:=1 to n-1 do
+		begin
+			min:=MaxLongInt div 10;
+			for j:=1 to n do
+				if (NOT vis[j]) AND (min&gt;d[j]) then
+					begin
+						p:=j;
+						min:=d[j];
+					end;
+			vis[p]:=true;
+			writeln('p:',p);
+			for j:=1 to n do
+				if (NOT vis[j]) then
+					if d[p]+f[p,j]&lt;d[j]
+						then d[j]:=d[p]+f[p,j];
+		end;
+	for i:=1 to n do
+		if s&lt;&gt;i then
+			writeln(s,'----&gt;',i,':',d[i]);
+End;
+
+Begin
+	readln(n,s);
+	for i:=1 to n do
+		for j:=1 to n do
+			read(f[i,j]);
+	Dijkstra(s,n);
+End.</pre><pre style="box-sizing: inherit; border: 1px solid rgba(51, 51, 51, 0.0980392); font-family: Inconsolata, monospace; font-size: 19px; margin-top: 0px; margin-bottom: 1.6842em; outline: 0px; padding: 0.8em; vertical-align: baseline; line-height: 1.2632; max-width: 100%; overflow: auto; white-space: pre-wrap; word-wrap: break-word; color: rgb(51, 51, 51); background-color: rgba(0, 0, 0, 0.00784314);"></pre><h1 style="box-sizing: inherit; border: 0px; font-family: 'Noto Serif', serif; font-size: 3.9rem; margin: 1.641em 0px 0.8205em; outline: 0px; padding: 0px; vertical-align: baseline; clear: both; line-height: 1.2308; color: rgb(51, 51, 51);">Prim算法和Kruskal算法和并查集思想的结合之最小生成树算法</h1><p style="box-sizing: inherit; border: 0px; font-family: 'Noto Serif', serif; font-size: 19px; margin: 0px 0px 1.6842em; outline: 0px; padding: 0px; vertical-align: baseline; color: rgb(51, 51, 51); line-height: 31.9998px;">&nbsp;</p><pre style="box-sizing: inherit; border: 1px solid rgba(51, 51, 51, 0.0980392); font-family: Inconsolata, monospace; font-size: 19px; margin-top: 0px; margin-bottom: 1.6842em; outline: 0px; padding: 0.8em; vertical-align: baseline; line-height: 1.2632; max-width: 100%; overflow: auto; white-space: pre-wrap; word-wrap: break-word; color: rgb(51, 51, 51); background-color: rgba(0, 0, 0, 0.00784314);">{
+	Prim算法和Kruskal算法和并查集思想的结合之最小生成树算法
+	打字By:SpringHack
+	边集数组表示法
+}
+Program sksks;
+Var
+	a,b,c:array[1..1024] of longint;
+	i,n,p:longint;
+
+procedure sort(l,r: longint);
+      var
+         i,j,x,y: longint;
+      begin
+         i:=l;
+         j:=r;
+         x:=c[(l+r) div 2];
+         repeat
+           while c[i]&lt;x do
+            inc(i);
+           while x&lt;c[j] do
+            dec(j);
+           if not(i&gt;j) then
+             begin
+                y:=a[i];
+                a[i]:=a[j];
+                a[j]:=y;
+				y:=b[i];
+                b[i]:=b[j];
+                b[j]:=y;
+				y:=c[i];
+                c[i]:=c[j];
+                c[j]:=y;
+                inc(i);
+                j:=j-1;
+             end;
+         until i&gt;j;
+         if l&lt;j then
+           sort(l,j);
+         if i&lt;r then
+           sort(i,r);
+      end;
+
+Procedure Prim(n,p:longint);
+Var
+	i,j:longint;
+	v:array[1..1024] of integer;
+	d:array[1..1024] of boolean;
+Begin
+	sort(1,p);
+	fillchar(v,sizeof(v),0);
+	fillchar(d,sizeof(d),0);
+	v[1]:=1;
+	for i:=2 to n do
+		begin
+			j:=1;
+			while NOT ((v[a[j]]&lt;&gt;v[b[j]]) AND (NOT d[j])) do
+				inc(j);
+			v[a[j]]:=1;
+			v[b[j]]:=1;
+			d[j]:=true;
+		end;
+	for i:=1 to p do
+		if d[i] then
+			writeln(a[i],'----&gt;',b[i],':',c[i]);
+End;
+
+Begin
+	readln(n,p);
+	for i:=1 to p do
+		readln(a[i],b[i],c[i]);
+	Prim(n,p);
+End.</pre>

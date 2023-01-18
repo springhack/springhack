@@ -1,0 +1,54 @@
+
+
+<p>其实用的比较晚了这个特性，之前一直是停留在理论阶段，网上的教程又都是用babel-preset-stage-0的－－</p>
+
+<p>先说下开发环境吧。我之前一直没有配置成功，最后发现居然是我在全局安装了一个babel的旧版本，想死的心都有－－</p>
+
+<p>babel-cli, babel-preset-latest, babel-polyfill，这三个就足够了，用latest简单暴力，里面包含了所有babel最新的ES的preset－－</p>
+
+<p>还有，我写的是一个类似爬虫的东东，用习惯了Fetch API，所以我这里在Node.js用的node-fetch，挺好用的－－</p>
+
+<p>只要是返回Promise的都可以用await来前置，不是Promise也没关系。前提是，await语句必须包含在async函数里面，好像没人提到。async函数可以用await来调用，酱紫返回的是最后的resolve结果。如果直接调用，也是可以的，毕竟async函数总是要有个入口的嘛，返回的是Promise对象，即使你返回的不是Promise他也会包装下－－</p>
+
+<p>例子，我的getJson函数是一个async函数，返回一个网页进行正则匹配后的json。我需要并发多个获取，统一返回所有结果，这里我是这么写的：</p>
+
+<pre>
+<code class="language-javascript">let getInfo = async urls =&gt; {
+    return new Promise((res, rej) =&gt; {
+        let count = 0;
+        let info = [];
+        for (let i in urls)
+        {
+            let ptr = i;
+            getJson(urls[ptr]).then(obj =&gt; {
+                ++count;
+                info[ptr] = obj;
+                if (count == urls.length)
+                    res(info);
+            });
+        }
+    });
+};</code></pre>
+
+<p>这个getInfo函数也是async函数，因为我后面要用到它，看我的导出接口：</p>
+
+<pre>
+<code class="language-javascript">let updateInfo = async () =&gt; {
+    let {urls, year, month, desc} = await getIndex();
+    let info = await getInfo(urls);
+    return {desc, year, month, info};
+}
+
+//导出接口
+export {updateInfo};</code></pre>
+
+<p>getIndex函数也是async函数，抓取了一个网页并进行解析，得到urls数组，然后传给了getInfo，得到了所有页面的解析结果。总的来说，async/await特性还是很有用的，不过暂时还不是官方特性。对了，代码一定要:</p>
+
+<pre>
+<code class="language-javascript">import 'babel-polyfill';</code></pre>
+
+<p>不然会解析出错的。babel只是把它转译成ES5或者ES3了，但是相关功能的模拟要靠这个库来实现的。</p>
+
+<p>实践下总是好的，不然总也不会用。现在可以抛弃co模块了，你看看koa2不是也用这个了么－－&nbsp;</p>
+
+<p>对了，以上的代码截取自一个新番索引网站，其实就是练练手，抓的dilidili的网站，<a href="http://acm.dosk.win:3010/" target="_blank">http://acm.dosk.win:3010/</a>&nbsp;，代码在Github能看到－－&nbsp;</p>
