@@ -7,11 +7,6 @@
     {% if page.layout != 'home' %}{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %} - {{ site.title }}{% else %}
     {{ site.title }}{% endif %}
   </title>
-  <script>
-    if ((new URL(location.href)).pathname === '/home') {
-      location.href = '/';
-    }
-  </script>
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   <script type="text/javascript" src="{{ page.js_file | relative_url }}"></script>
 
