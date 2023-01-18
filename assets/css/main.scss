@@ -72,6 +72,10 @@ button:disabled.btn.btn-outline {
 
 a.active.btn.btn-outline { color: var(--bg-color); background-color: var(--alt-color); }
 
+.home-paginator .btn.btn-outline {
+  margin: 0 0.5em;
+}
+
 img {
   max-width: 100%;
 }
@@ -89,7 +93,8 @@ body {
 main {
   width: 100%;
   flex-grow: 1;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 footer {
@@ -127,6 +132,11 @@ footer {
 }
 
 .home-paginator {
-  bottom: 0;
-  position: absolute;
+  display: flex;
+  justify-content: end;
+}
+
+.flex-spacer {
+  width: 100%;
+  flex-grow: 1;
 }
