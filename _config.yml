@@ -7,11 +7,6 @@ url: "https://dosk.win"
 github_username: springhack
 twitter_username: springhack
 
-plugins:
-  - jemoji
-  - jekyll-sitemap
-  - jekyll-seo-tag
-
 sass:
   style: compressed
 
@@ -33,6 +28,8 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-mentions
+  - jemoji
+  - jekyll-seo-tag
 
 header_pages:
   - pages/archives.md
@@ -44,7 +41,7 @@ font-size: small
 
 comments_provider: gitalk
 gitalk:
-  clientID: '63125e6057f210f8095c'
-  clientSecret: 'e0a6c16cb45c54eb578e6fead8a87cf70b0471e0'
-  repo: 'springhack'
-  owner: 'springhack'
+  clientID: "63125e6057f210f8095c"
+  clientSecret: "e0a6c16cb45c54eb578e6fead8a87cf70b0471e0"
+  repo: "springhack"
+  owner: "springhack"
