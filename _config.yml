@@ -19,10 +19,11 @@ kramdown:
 lsi: false
 quiet: false
 paginate: 10
+paginate_path: "page:num"
 highlighter: rouge
 excerpt_separator: "\n\n"
 permalink: /:year/:month/:day/:title/
-gems:
+plugins:
     - jekyll-github-metadata
     - rouge
     - jekyll-paginate
