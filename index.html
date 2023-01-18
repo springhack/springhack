@@ -1,0 +1,51 @@
+---
+layout: home
+permalink: /
+permalink_name: /home
+title: jekyll-shell-theme
+
+detail_image: assets/theme_logo.svg
+
+---
+
+{% for post in paginator.posts %}
+<li class="post-item">
+  {{ post.date | date: "%Y/%m/%d" }}
+  <a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
+  {% if post.description %}
+    -- {{ post.description | strip_html | strip }}
+  {% else if post.excerpt %}
+    -- {{ post.description | strip_html | strip }}
+  {% endif %}
+</li>
+{% endfor %}
+
+{% if paginator.previous_page %}
+  {% if paginator.previous_page == 1 %}
+      <a href="{{ site.url }}/" class="btn btn-outline">&laquo;</a>
+  {% else %}
+      <a href="{{ site.url }}/page{{paginator.previous_page}}"  class="btn btn-outline">&laquo;</a>
+  {% endif %}
+{% else %}
+    <button disabled="disabled" href="javascript:;" class="btn btn-outline">&laquo;</button>
+{% endif %}
+
+{% if paginator.page == 1 %}
+    <a href="javascript:;" class="active btn btn-outline">1</a>
+{% else %}
+    <a href="{{ site.url }}/"  class="btn btn-outline">1</a>
+{% endif %}
+
+{% for count in (2..paginator.total_pages) %}
+  {% if count == paginator.page %}
+      <a href="javascript:;"  class="active btn btn-outline">{{count}}</a>
+  {% else %}
+      <a href="{{ site.url }}/page{{count}}"  class="btn btn-outline">{{count}}</a>
+  {% endif %}
+{% endfor %}
+
+{% if paginator.next_page %}
+    <a href="{{ site.url }}/page{{paginator.next_page}}"  class="btn btn-outline">&raquo;</a>
+{% else %}
+    <button disabled="disabled" href="javascript:;" class="btn btn-outline">&raquo;</button>
+{% endif %}
