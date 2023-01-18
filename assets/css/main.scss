@@ -61,11 +61,19 @@ ul :not(.menu) > ul > li:before { content: "*";  margin-right: 9px; }
 
 /* ERROR PAGES */
 
-div.error_box { margin: 100px; text-align: center; }
+div.error_box { margin: 100px; }
 div.error_box h1 { font-size: 2em; }
 
 *::selection { background-color: var(--light-alt-color); color: black; }
 
 button:disabled.btn.btn-outline {
   display: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+pre {
+  overflow: scroll;
 }

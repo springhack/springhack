@@ -6,7 +6,7 @@ title: Old Posts
 detail_image: ../assets/springhack.png
 ---
 
-> 想看看我以前写了啥？我自己都不知道，看吧那就 =。=
+<li>想看看我以前写了啥？我自己都不知道，看吧那就 =。=</li>
 
 [旧的](https://github.com/springhack/springhack/tree/main/_old/old_posts)
 
