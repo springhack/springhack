@@ -93,11 +93,19 @@ pre {
 
 .contact-me {
   display: flex;
-  align-items: center;
   justify-content: end;
 }
 
 .contact-me a {
-  padding: 0 20px 0 0;
+  display: flex;
+  margin: 0 0 0 20px;
+  align-items: center;
   text-decoration: none;
+}
+
+.contact-me a img {
+  top: 0.5px;
+  width: 14px;
+  height: 14px;
+  position: relative;
 }

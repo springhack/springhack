@@ -1,11 +1,16 @@
 <footer>
 
-  {{ site.title }}/{{ page.permalink_name | replace: "/", "" | replace: " ", "-" }}
-  <br><br>
+  <div>
+    {{ site.title }}/{{ page.permalink_name | replace: "/", "" | replace: " ", "-" }}
+  </div>
 
   <div class="contact-me">
-    {% if site.github_username and site.github_username != "" %} :earth_asia: <a href="https://github.com/{{site.github_username}}">github</a> {% endif %}
-    {% if site.twitter_username and site.twitter_username != "" %} :earth_asia: <a href="https://twitter.com/{{site.twitter_username}}">twitter</a> {% endif %}
+    {% if site.github_username and site.github_username != "" %}
+      <a href="https://github.com/{{site.github_username}}"> :earth_asia: GITHUB</a>
+    {% endif %}
+    {% if site.twitter_username and site.twitter_username != "" %}
+      <a href="https://twitter.com/{{site.twitter_username}}"> :earth_asia: TWITTER</a>
+    {% endif %}
   </div>
 
 </footer>
