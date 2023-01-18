@@ -24,18 +24,20 @@ highlighter: rouge
 excerpt_separator: "\n\n"
 permalink: /:year/:month/:day/:title/
 plugins:
-    - jekyll-github-metadata
-    - rouge
-    - jekyll-paginate
-    - jekyll-sitemap
-    - jekyll-feed
-    - jemoji
-    - jekyll-mentions
+  - jekyll-github-metadata
+  - rouge
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jemoji
+  - jekyll-mentions
 
 header_pages:
-  - index.md
-  - read-me.md
-  - preview.md
+  - pages/404.md
+  - pages/about.md
+  - pages/archives.md
+  - pages/categories.md
+  - pages/old_posts.md
 
 # set the size of the text to 'large' or 'small', default is small
 font-size: small
