@@ -79,3 +79,14 @@ img {
 pre {
   overflow: scroll;
 }
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.post-tags a {
+  padding: 0 20px 0 0;
+}
+
+.post-tags a:hover { color: var(--alt-color); background-color: initial; }
