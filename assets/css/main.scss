@@ -70,6 +70,8 @@ button:disabled.btn.btn-outline {
   display: none;
 }
 
+a.active.btn.btn-outline { color: var(--bg-color); background-color: var(--alt-color); }
+
 img {
   max-width: 100%;
 }
