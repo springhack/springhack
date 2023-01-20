@@ -112,6 +112,7 @@ export default class RawEditor extends React.Component {
                   ${rawEditorStyles({ minimal: field.get('minimal') })}
                 `,
               )}
+              height="calc(100vh - 265px)"
               theme="vs-dark"
               language="markdown"
               value={this.state.text}
