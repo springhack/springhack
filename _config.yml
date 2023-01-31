@@ -41,7 +41,8 @@ font-size: small
 
 comments_provider: gitalk
 gitalk:
-  clientID: "63125e6057f210f8095c"
-  clientSecret: "e0a6c16cb45c54eb578e6fead8a87cf70b0471e0"
   repo: "springhack"
   owner: "springhack"
+  clientID: "63125e6057f210f8095c"
+  clientSecret: "e0a6c16cb45c54eb578e6fead8a87cf70b0471e0"
+  proxy: "https://win.dosk.win/fetch/https://github.com/login/oauth/access_token"

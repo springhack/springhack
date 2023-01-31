@@ -14,7 +14,7 @@
           admin: ['{{ site.gitalk.owner }}'],
           labels: ['gitment'],
           perPage: 50,
-          proxy: 'https://win.dosk.win/fetch/https://github.com/login/oauth/access_token'
+          proxy: '{{ site.gitalk.proxy }}'
         })
         gitalk.render('gitalk-container')
       </script>

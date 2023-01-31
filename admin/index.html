@@ -1,10 +1,8 @@
+---
+layout: blank
+---
+
 <!doctype html>
-<!--
-  Author: SpringHack - springhack@live.cn
-  Last modified: 2021-09-12 15:45:52
-  Filename: admin/index.html
-  Description: Created by SpringHack using vim automatically.
--->
 <html>
   <head>
     <meta charset="utf-8" />
@@ -13,6 +11,39 @@
     <link rel='stylesheet' href='./css/index.css' />
   </head>
   <body>
+    <script>
+      globalThis.oauthInfo = {
+        proxy: '{{ site.gitalk.proxy }}',
+        client_id: '{{ site.gitalk.clientID }}',
+        client_secret: '{{ site.gitalk.clientSecret }}'
+      };
+      const url = new URL(location.href);
+      const code = url.searchParams.get('code');
+      if (code && code.length) {
+        const body = JSON.stringify({
+          code,
+          ...globalThis.oauthInfo
+        });
+        const headers = {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        };
+        const method = 'POST';
+        fetch(globalThis.oauthInfo.proxy, { body, method, headers })
+          .then(res => res.json())
+          .then((json) => {
+            const { access_token: token } = json;
+            localStorage.setItem('netlify-cms-user', JSON.stringify({
+              token,
+              backendName: 'github'
+            }));
+            location.href = `${url.origin}${url.pathname}`;
+          })
+          .catch((error) => {
+            alert(error.toString());
+          });
+      }
+    </script>
     <script src="./js/netlify-cms.js"></script>
     <script src='./js/index.js'></script>
     <script src='./pinyin/pinyin_dict_notone.js'></script>
