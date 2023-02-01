@@ -7,17 +7,24 @@ import { debounce } from 'lodash';
 import Plain from 'slate-plain-serializer';
 import { lengths, fonts } from 'netlify-cms-ui-default';
 
-import Monaco from "@monaco-editor/react";
+import CodeMirror from '@uiw/react-codemirror';
+import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
+import { languages } from '@codemirror/language-data';
+import { nord } from '@uiw/codemirror-theme-nord';
 
 import { editorStyleVars, EditorControlBar } from '../styles';
 import Toolbar from './Toolbar';
+
+function minHeight(minimal) {
+  return `${minimal ? 'auto' : lengths.richTextEditorMinHeight}`;
+}
 
 function rawEditorStyles({ minimal }) {
   return `
   position: relative;
   overflow: hidden;
   overflow-x: auto;
-  min-height: ${minimal ? 'auto' : lengths.richTextEditorMinHeight};
+  min-height: ${minHeight(minimal)};
   font-family: ${fonts.mono};
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -105,24 +112,25 @@ export default class RawEditor extends React.Component {
         </EditorControlBar>
         <ClassNames>
           {({ css, cx }) => (
-            <Monaco
+            <CodeMirror
               className={cx(
                 className,
                 css`
                   ${rawEditorStyles({ minimal: field.get('minimal') })}
                 `,
               )}
-              height="calc(100vh - 265px)"
-              theme="vs-dark"
-              language="markdown"
+              extensions={[
+                markdown({
+                  base: markdownLanguage,
+                  codeLanguages: languages
+                })
+              ]}
+              theme={nord}
               value={this.state.text}
               onMount={this.processRef}
               onChange={this.handleChange}
-              options={{
-                minimap: {
-                  enabled: false
-                }
-              }}
+              minHeight={minHeight(field.get('minimal'))}
+              placeholder={'Edit markdown content here ...'}
             />
           )}
         </ClassNames>

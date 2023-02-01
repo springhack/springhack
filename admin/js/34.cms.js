@@ -1,0 +1,2 @@
+(window.webpackJsonpNetlifyCms=window.webpackJsonpNetlifyCms||[]).push([[34],{1982:function(e,n,r){"use strict";r.r(n),r.d(n,"diff",(function(){return i}));var t={"+":"inserted","-":"deleted","@":"meta"};const i={name:"diff",token:function(e){var n=e.string.search(/[\t ]+?$/);if(!e.sol()||0===n)return e.skipToEnd(),("error "+(t[e.string.charAt(0)]||"")).replace(/ $/,"");var r=t[e.peek()]||e.skipToEnd();return-1===n?e.skipToEnd():e.pos=n,r}}}}]);
+//# sourceMappingURL=34.cms.js.map

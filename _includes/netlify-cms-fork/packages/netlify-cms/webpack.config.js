@@ -52,6 +52,7 @@ if (isProduction) {
       entry: ['./shims/deprecate-old-dist.js', baseConfig.entry],
       output: {
         ...baseConfig.output,
+        publicPath: './js/',
         filename: 'cms.js',
       },
     },

@@ -3,7 +3,7 @@
     "bootstrap": "lerna bootstrap",
     "start": "run-s clean bootstrap build:esm develop",
     "develop": "lerna run develop --parallel --ignore netlify-cms-proxy-server",
-    "build": "run-s clean build:esm build:lerna && cp packages/netlify-cms/dist/netlify-cms.js ../../admin/js/netlify-cms.js",
+    "build": "run-s clean build:esm build:lerna && cp -rvf packages/netlify-cms/dist/*.cms.js ../../admin/js/ && cp -rvf packages/netlify-cms/dist/cms.js ../../admin/js/",
     "build:lerna": "lerna run build",
     "build:esm": "lerna run build:esm",
     "build-preview": "run-s build build-preview:lerna",
