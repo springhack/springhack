@@ -7,9 +7,11 @@ categories:
 description: 主要是测试 zfs 的效果
 keywords: unraid, 6.12.0, beta18, unraider
 ---
-### 版本
+### 功能
 
 > 随便下载了个 beta18 压缩包解压安装的，地址 [6.12.0-beta18](https://unraid-dl.sfo2.cdn.digitaloceanspaces.com/test/unRAIDServer-6.12.0-beta18-x86_64.zip)
+
+> `Dashboard` 里多了个锁头 `icon`，用来锁定里面拖拽排序的
 
 ![](/uploads/index.png)
 
