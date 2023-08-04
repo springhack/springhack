@@ -8,7 +8,7 @@ categories:
 description: 当然不是宽带，用不起
 keywords: n100, 82599es
 ---
-> 书接上文 [整活新玩具，半 DIY 一个万兆软路由](/2023/08/04/zheng-huo-xin-wan-ju-ban-diy-yi-ge-wan-zhao-ruan-lu-you/)，测了个速
+> 书接上文 [整活新玩具，半 DIY 一个万兆软路由](/2023/08/04/a-zheng-huo-xin-wan-ju-ban-diy-yi-ge-wan-zhao-ruan-lu-you/)，测了个速
 
 ## 网络配置
 
