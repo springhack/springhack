@@ -3,6 +3,7 @@ tagline: "SpringHack 的无名技术小站"
 description: "SpringHack 的无名技术小站"
 baseurl: "/"
 url: "https://dosk.win"
+encoding: utf-8
 
 github_username: springhack
 twitter_username: springhack
