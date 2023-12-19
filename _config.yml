@@ -14,6 +14,7 @@ sass:
 markdown: kramdown
 kramdown:
   input: GFM
+
 lsi: false
 quiet: false
 paginate: 10
@@ -21,16 +22,16 @@ paginate_path: "page:num"
 highlighter: rouge
 excerpt_separator: "\n\n"
 permalink: /:year/:month/:day/:title/
+
 plugins:
   - jekyll-github-metadata
-  - rouge
+  - jekyll-mentions
   - jekyll-paginate
   - jekyll-sitemap
+  - jekyll-seo-tag
   - jekyll-feed
   - jemoji
-  - jekyll-mentions
-  - jemoji
-  - jekyll-seo-tag
+  - rouge
 
 header_pages:
   - pages/archives.md
@@ -39,8 +40,8 @@ header_pages:
   - pages/about.md
 
 font-size: small
-
 comments_provider: gitalk
+
 gitalk:
   repo: "springhack"
   owner: "springhack"
