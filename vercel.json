@@ -1,0 +1,43 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/fetch/https:github.com/login/oauth/access_token",
+      "destination": "https://github.com/login/oauth/access_token"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/atom.xml",
+      "destination": "https://springhack.github.io/springhack/feed.xml"
+    },
+    {
+      "source": "/feed.xml",
+      "destination": "https://springhack.github.io/springhack/feed.xml"
+    },
+    {
+      "source": "/rss.xml",
+      "destination": "https://springhack.github.io/springhack/feed.xml"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=86400, max-age=86400"
+        }
+      ]
+    }
+  ]
+}
