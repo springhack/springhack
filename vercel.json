@@ -8,16 +8,12 @@
   ],
   "redirects": [
     {
-      "source": "/atom.xml",
+      "source": "/(feed|atom|rss)(.xml)?",
       "destination": "https://springhack.github.io/springhack/feed.xml"
     },
     {
-      "source": "/feed.xml",
-      "destination": "https://springhack.github.io/springhack/feed.xml"
-    },
-    {
-      "source": "/rss.xml",
-      "destination": "https://springhack.github.io/springhack/feed.xml"
+      "source": "/uploads/:file*",
+      "destination": "https://uploads.dosk.win/uploads/:file*"
     }
   ],
   "headers": [
