@@ -6,7 +6,6 @@ categories:
   - code
   - life
   - work
-  - game
 description: 年轻人的第一次年底碎碎念
 keywords: 2023, dosk, springhack, homelab
 ---
