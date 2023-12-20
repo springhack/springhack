@@ -9,7 +9,7 @@
   "redirects": [
     {
       "source": "/(feed|atom|rss)(.xml)?",
-      "destination": "https://springhack.github.io/springhack/feed.xml"
+      "destination": "https://uploads.dosk.win/feed.xml"
     },
     {
       "source": "/uploads/:file*",
