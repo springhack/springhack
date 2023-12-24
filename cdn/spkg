@@ -1,14 +1,11 @@
 #!/bin/bash
 
 SELF_REPO="http://dosk.win/cdn/spkg"
-REPO_VERS="slackware64"
 REPO_NAME=(
   "slackware"
-  "conraid"
 )
 declare -A REPO_URLS=(
-  ["slackware"]="https://mirrors.slackware.com/slackware/slackware64-current"
-  ["conraid"]="https://slack.conraid.net/repository/slackware64-current"
+  ["slackware"]="https://mirrors.slackware.com/slackware/slackware64-15.0"
 )
 
 opt="$1"
