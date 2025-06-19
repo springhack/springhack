@@ -4,6 +4,10 @@
     {
       "source": "/fetch/https:github.com/login/oauth/access_token",
       "destination": "https://github.com/login/oauth/access_token"
+    },
+    {
+      "source": "/fetch/https:github.com/repos/Infinity-Server/dockerset/dispatches",
+      "destination": "https://api.github.com/repos/Infinity-Server/dockerset/dispatches"
     }
   ],
   "redirects": [
