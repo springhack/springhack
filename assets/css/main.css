@@ -101,9 +101,15 @@ main ul ul {
 
 main ol {
   list-style: decimal;
-  list-style-position: outside;
-  padding-left: 1.5em;
+  list-style-position: inside;
+  padding-left: 0;
   margin: 0.5em 0 0.7em 0;
+}
+
+/* Keep ordered list markers inside bordered containers */
+blockquote ol {
+  list-style-position: inside;
+  padding-left: 0;
 }
 
 /* Navigation */
@@ -227,4 +233,3 @@ main .h-anchor:focus {
   opacity: 1;
   color: var(--alt-color);
 }
-
