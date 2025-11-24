@@ -1,5 +1,23 @@
 .highlight .hll { background-color: #333333 }
-.highlight  { background: #111111; color: #ffffff; padding-left: 10px; border-radius: 10px; padding-top: 1px; padding-bottom: 1px; }
+/* .highlight  {
+  position: relative;
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  margin: 1em 0;
+  padding: 0.8em 1em 0.8em 1.2em;
+  border: 1px solid rgba(219, 219, 219, 0.25);
+  border-left: 4px solid var(--alt-color);
+  border-radius: 6px;
+}
+
+.highlight pre {
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: transparent;
+  border: none;
+  padding: 0;
+} */
 .highlight .c { color: #008800; font-style: italic; background-color: #0f140f } /* Comment */
 .highlight .err { color: #ffffff } /* Error */
 .highlight .esc { color: #ffffff } /* Escape */

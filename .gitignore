@@ -30,5 +30,3 @@ vendor/bundle/
 .sass-cache/
 _site/
 *.gem
-assets/css/main.css
-assets/css/main.css.map

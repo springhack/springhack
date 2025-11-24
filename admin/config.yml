@@ -2,7 +2,7 @@ collections:
   - name: blog
     label: Blogs
     create: true
-    folder: _posts
+    folder: posts
     slug: '{{year}}-{{month}}-{{day}}-{{filename}}'
     fields:
       - label: Layout

@@ -1,5 +1,5 @@
 ---
-layout: categories
+layout: page
 permalink: /categories
 title: Categories
 comments: false

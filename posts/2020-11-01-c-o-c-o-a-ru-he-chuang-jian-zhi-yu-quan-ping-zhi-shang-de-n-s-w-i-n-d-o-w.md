@@ -3,6 +3,7 @@ layout: post
 categories:
   - code
 title: Cocoa 如何创建置于全屏之上的 NSWindow
+description: 最近在写一个截图 app，需要创建一个置于全屏之上的窗口，记录一下实现过程
 ---
 ## 起因
 

@@ -1,6 +1,7 @@
 baseURL = "https://dosk.win"
 title = "Dosk 技术站"
 languageCode = "zh-cn"
+disableKinds = ["taxonomy"]
 
 [pagination]
   pagerSize = 10
@@ -29,8 +30,6 @@ languageCode = "zh-cn"
   defaultMarkdownHandler = "goldmark"
   [markup.goldmark.renderer]
     unsafe = true
-  [markup.sass]
-    transpiler = "dartsass"
 
 [frontmatter]
   date = [":filename", "date", "publishDate", "lastmod"]
@@ -61,7 +60,7 @@ languageCode = "zh-cn"
 
 [module]
   [[module.mounts]]
-    source = "_posts"
+    source = "posts"
     target = "content/posts"
   [[module.mounts]]
     source = "pages"
@@ -72,9 +71,6 @@ languageCode = "zh-cn"
   [[module.mounts]]
     source = "admin"
     target = "static/admin"
-  [[module.mounts]]
-    source = "assets"
-    target = "assets"
   [[module.mounts]]
     source = "assets"
     target = "static/assets"

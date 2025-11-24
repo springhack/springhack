@@ -4,10 +4,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   <title>
-    {{ if ne .Type "home" }}{{ if .Title }}{{ .Title }}{{ else }}{{ .Site.Title }}{{ end }} - {{ .Site.Title }}{{ else }}
-    {{ .Site.Title }}{{ end }}
+    {{ if .IsHome }}
+      {{ .Site.Title }}
+    {{ else }}
+      {{ if .Title }}{{ .Title }} - {{ .Site.Title }}{{ else }}{{ .Site.Title }}{{ end }}
+    {{ end }}
   </title>
 
+  {{ with .Params.description }}
+    <meta name="description" content="{{ . }}">
+  {{ else }}
+    {{ with $.Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
+  {{ end }}
+
+  {{ with .Params.keywords }}
+    {{ $raw := . }}
+    {{ $kwList := slice }}
+    {{ if eq (printf "%T" $raw) "string" }}
+      {{ range (split $raw ",") }}
+        {{ $s := trim . ", " }}
+        {{ if $s }}{{ $kwList = $kwList | append $s }}{{ end }}
+      {{ end }}
+    {{ else }}
+      {{ $list := (slice $raw) }}
+      {{ $first := index $list 0 }}
+      {{ if eq (printf "%T" $first) "[]string" }}
+        {{ range $first }}
+          {{ $s := trim . ", " }}
+          {{ if $s }}{{ $kwList = $kwList | append $s }}{{ end }}
+        {{ end }}
+      {{ else }}
+        {{ range $list }}
+          {{ $s := trim . ", " }}
+          {{ if $s }}{{ $kwList = $kwList | append $s }}{{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{/* lowercase and deduplicate */}}
+    {{ $kwLower := slice }}
+    {{ range $kwList }}
+      {{ $kwLower = $kwLower | append (lower .) }}
+    {{ end }}
+    {{ $kwFinal := uniq $kwLower }}
+    {{ if gt (len $kwFinal) 0 }}<meta name="keywords" content="{{ delimit $kwFinal ", " }}">{{ end }}
+  {{ end }}
+
+  {{/* Open Graph tags */}}
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ if .Title }}{{ .Title }} - {{ .Site.Title }}{{ else }}{{ .Site.Title }}{{ end }}{{ end }}">
+  <meta property="og:description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ with $.Site.Params.description }}{{ . }}{{ end }}{{ end }}">
+  <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+  <meta property="og:url" content="{{ if .IsHome }}{{ .Site.BaseURL }}{{ else }}{{ .Permalink }}{{ end }}">
+  {{ $img := (or .Params.detail_image "/assets/springhack.png") }}
+  {{ $imgAbs := cond (hasPrefix $img "http") $img (absURL $img) }}
+  <meta property="og:image" content="{{ $imgAbs }}">
+
   <link rel="stylesheet" href="/assets/css/main.css">
+  <script defer src="/assets/js/heading-anchors.js"></script>
   {{ with .Params.js_file }}<script type="text/javascript" src="{{ . }}"></script>{{ end }}
 </head>

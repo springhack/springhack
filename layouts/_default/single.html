@@ -1,20 +1,25 @@
 {{ define "main" }}
   <!-- layout: {{ .Layout }} type: {{ .Type }} kind: {{ .Kind }} section: {{ .Section }} -->
-  {{ if eq .Layout "archives" }}
-    <section class="container posts-content">
-      {{ $groups := ((where .Site.RegularPages "Section" "posts").GroupByDate "2006") }}
-      {{ range sort $groups "Key" "desc" }}
-        <h3>{{ .Key }} ({{ len .Pages }})</h3>
-        <ol class="posts-list">
-          {{ range sort .Pages "Date" "desc" }}
-            <li class="posts-list-item">
-              <span class="posts-list-meta">{{ .Date.Format "01-02" }}</span>
-              <a class="posts-list-name" href="{{ .RelPermalink }}">{{ .Title }}</a>
-            </li>
+  {{ if eq .Section "posts" }}
+    {{ with .Params.detail_image }}<img class="detail_header" src="{{ . }}">{{ end }}
+
+    {{ with .Params.categories }}
+      <div class="p st-tags">
+        {{ $list := (slice .) }}
+        {{ $first := index $list 0 }}
+        {{ if eq (printf "%T" $first) "[]string" }}
+          {{ range $first }}
+            <a href="/categories#{{ . }}" title="{{ . }}">◸{{ . }}</a>
           {{ end }}
-        </ol>
-      {{ end }}
-    </section>
+        {{ else }}
+          {{ range $list }}
+            <a href="/categories#{{ . }}" title="{{ . }}">◸{{ . }}</a>
+          {{ end }}
+        {{ end }}
+      </div>
+    {{ end }}
+
+    {{ .Content }}
   {{ else }}
     {{ .Content }}
   {{ end }}

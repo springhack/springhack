@@ -1,5 +1,5 @@
 ---
-layout: archives
+layout: page
 permalink: /archives
 title: Archives
 comments: false
