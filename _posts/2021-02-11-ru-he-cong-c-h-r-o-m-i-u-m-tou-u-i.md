@@ -2,7 +2,6 @@
 layout: post
 categories:
   - code
-published: true
 title: 如何从 Chromium “偷” UI
 description: 基于 Chromium 的跨进程渲染实现
 ---
@@ -63,4 +62,3 @@ description: 基于 Chromium 的跨进程渲染实现
 1. 文章只是记录了这件事的调查流程，包括不限于代码/截图因为产品原因是不会放出来的
 
 2. 是不是以后可以随便扣游戏画面了
-

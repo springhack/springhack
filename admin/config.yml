@@ -28,6 +28,10 @@ collections:
         name: keywords
         widget: string
         required: false
+      - label: Header Image
+        name: detail_image
+        widget: image
+        required: false
       - label: Body
         name: body
         widget: markdown
@@ -39,7 +43,7 @@ collections:
       - label: Layout
         name: layout
         widget: hidden
-        default: categories
+        default: page
       - label: Title
         name: title
         widget: string
@@ -59,9 +63,14 @@ collections:
         name: menu
         widget: string
         required: false
-      - label: Permalink
-        name: permalink
+      - label: URL
+        name: url
         widget: string
+        required: false
+      - label: Header Image
+        name: detail_image
+        widget: image
+        required: false
       - label: Body
         name: body
         widget: markdown

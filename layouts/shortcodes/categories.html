@@ -1,0 +1,13 @@
+<section class="container posts-content">
+  {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
+    <h3>{{ $name }}</h3>
+    <ol class="posts-list" id="{{ $name }}">
+      {{ range sort $taxonomy.Pages "Date" "desc" }}
+        <li class="posts-list-item">
+          <span class="posts-list-meta">{{ .Date.Format "2006-01-02" }}</span>
+          <a class="posts-list-name" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+      {{ end }}
+    </ol>
+  {{ end }}
+</section>

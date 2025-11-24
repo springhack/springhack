@@ -1,0 +1,14 @@
+{{- $menu := .Site.Menus.main -}}
+<header>
+  <div class="menu">
+    <ul>
+      <li class="page_title">{{ .Title }}</li>
+      {{- range $menu }}
+        {{- if and $.IsHome (eq .URL "/") -}}
+        {{- else -}}
+          <li><a href="{{ .URL }}">/{{ .Name }}</a></li>
+        {{- end -}}
+      {{- end }}
+    </ul>
+  </div>
+</header>

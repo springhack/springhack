@@ -2,7 +2,6 @@
 layout: post
 categories:
   - code
-published: true
 description: 一种调试 macOS 客户端的思路
 keywords: 'macOS, sample, atos'
 title: macOS 现场调试的一种 sample 解决思路

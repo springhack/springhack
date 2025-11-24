@@ -1,0 +1,14 @@
+<section class="container posts-content">
+  {{ $groups := ((where .Site.RegularPages "Section" "posts").GroupByDate "2006") }}
+  {{ range sort $groups "Key" "desc" }}
+    <h3>{{ .Key }} ({{ len .Pages }})</h3>
+    <ol class="posts-list">
+      {{ range sort .Pages "Date" "desc" }}
+        <li class="posts-list-item">
+          <span class="posts-list-meta">{{ .Date.Format "01-02" }}</span>
+          <a class="posts-list-name" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+      {{ end }}
+    </ol>
+  {{ end }}
+</section>

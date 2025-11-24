@@ -1,6 +1,12 @@
 {
   "cleanUrls": true,
+  "buildCommand": "npm run build",
+  "outputDirectory": "public",
   "rewrites": [
+    {
+      "source": "/:year/:month/:day/:slug/",
+      "destination": "/:year-:month-:day-:slug/"
+    },
     {
       "source": "/fetch/https:github.com/login/oauth/access_token",
       "destination": "https://github.com/login/oauth/access_token"

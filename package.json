@@ -1,0 +1,13 @@
+{
+  "name": "springhack-blog",
+  "private": true,
+  "scripts": {
+    "prebuild": "sass assets/css/main.scss assets/css/main.css --style=compressed",
+    "build": "hugo --gc --minify -D",
+    "dev": "hugo server -D -p 1313 --disableFastRender"
+  },
+  "devDependencies": {
+    "hugo-bin": "^0.119.0",
+    "sass": "^1.77.5"
+  }
+}

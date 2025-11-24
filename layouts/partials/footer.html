@@ -1,0 +1,13 @@
+<footer>
+
+  <div>
+    {{ .Site.Title }}/{{ with .Params.permalink_name }}{{ replace (replace . "/" "") " " "-" }}{{ else }}{{ replace (trim .RelPermalink "/") "/" "-" }}{{ end }}
+  </div>
+
+  <div class="contact-me">
+    {{ with .Site.Params.github_username }}<a href="https://github.com/{{ . }}"> :earth_asia: GITHUB</a>{{ end }}
+    {{ with .Site.Params.twitter_username }}<a href="https://twitter.com/{{ . }}"> :earth_asia: TWITTER</a>{{ end }}
+  </div>
+
+</footer>
+

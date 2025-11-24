@@ -2,7 +2,6 @@
 layout: post
 categories:
   - code
-published: true
 description: 记录下魔改 Titlebar 的结果
 keywords: 'cocoa, macOS, titlebar'
 title: Cocoa 修改 TitleBar 样式

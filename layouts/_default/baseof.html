@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  {{ partial "head.html" . }}
+  <body class="{{ .Site.Params.fontSize }}">
+    {{ partial "header.html" . }}
+    <main>
+      {{ if ne .Section "posts" }}
+        <img class="detail_header" src="/assets/springhack.png">
+      {{ end }}
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "comments.html" . }}
+    {{ partial "footer.html" . }}
+  </body>
+  </html>

@@ -1,5 +1,34 @@
+# OS & Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Node & Package Managers
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+
+# Hugo build outputs & cache
+public/
+resources/_gen/
+.hugo_build.lock
+vendor/bundle/
+
+# Vercel local state
+.vercel/
+
+# Ruby/Jekyll leftovers (safe to ignore if present)
+.bundle/
+.jekyll-cache/
+.sass-cache/
+_site/
 *.gem
-.bundle
-.jekyll-cache
-.sass-cache
-_site
+assets/css/main.css
+assets/css/main.css.map

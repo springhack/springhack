@@ -2,7 +2,6 @@
 layout: post
 categories:
   - code
-published: true
 title: 修改 Prose 支持中文标题
 description: Prose 如何支持中文
 keywords: 'prose,github,heroku,pinyin'

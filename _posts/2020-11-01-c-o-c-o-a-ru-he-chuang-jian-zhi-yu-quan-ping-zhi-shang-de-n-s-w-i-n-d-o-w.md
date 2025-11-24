@@ -2,7 +2,6 @@
 layout: post
 categories:
   - code
-published: true
 title: Cocoa 如何创建置于全屏之上的 NSWindow
 ---
 ## 起因

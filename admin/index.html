@@ -1,51 +1,45 @@
----
-layout: blank
----
-
 <!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
     <title>Dosk Admin</title>
+    <link rel="cms-config-url" type="text/yaml" href="/admin/config.yml" />
   </head>
   <body>
     <script>
-      globalThis.oauthInfo = {
-        proxy: '{{ site.gitalk.proxy }}',
-        client_id: '{{ site.gitalk.clientID }}',
-        client_secret: '{{ site.gitalk.clientSecret }}'
-      };
-      const url = new URL(location.href);
-      const code = url.searchParams.get('code');
-      if (code && code.length) {
-        const body = JSON.stringify({
-          code,
-          ...globalThis.oauthInfo
-        });
-        const headers = {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+      (function () {
+        // OAuth configuration (placeholders will be replaced by proxy server response)
+        globalThis.oauthInfo = globalThis.oauthInfo || {
+          proxy: '{{ site.gitalk.proxy }}',
+          client_id: '{{ site.gitalk.clientID }}',
+          client_secret: '{{ site.gitalk.clientSecret }}'
         };
-        const method = 'POST';
-        fetch(globalThis.oauthInfo.proxy, { body, method, headers })
-          .then(res => res.json())
-          .then((json) => {
-            const { access_token: token } = json;
-            localStorage.setItem('netlify-cms-user', JSON.stringify({
-              token,
-              backendName: 'github'
-            }));
-            location.href = `${url.origin}${url.pathname}`;
-          })
-          .catch((error) => {
-            alert(error.toString());
-          });
-      }
+
+        const currentUrl = new URL(location.href);
+        const oauthCode = currentUrl.searchParams.get('code');
+        if (oauthCode && oauthCode.length) {
+          const payload = JSON.stringify({ code: oauthCode, ...globalThis.oauthInfo });
+          const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
+          fetch(globalThis.oauthInfo.proxy, { method: 'POST', headers, body: payload })
+            .then(res => res.json())
+            .then(json => {
+              const token = json && (json.access_token || json.token);
+              if (token) {
+                localStorage.setItem('netlify-cms-user', JSON.stringify({ token, backendName: 'github' }));
+              }
+              location.href = `${currentUrl.origin}${currentUrl.pathname}`;
+            })
+            .catch(error => {
+              alert(error && error.toString ? error.toString() : 'OAuth error');
+            });
+        }
+      })();
     </script>
+
     <script src="./js/cms.js"></script>
-    <script src='./js/index.js'></script>
-    <script src='./pinyin/pinyin_dict_notone.js'></script>
-    <script src='./pinyin/pinyin_util.js'></script>
+    <script src="./js/index.js"></script>
+    <script src="./pinyin/pinyin_dict_notone.js"></script>
+    <script src="./pinyin/pinyin_util.js"></script>
   </body>
 </html>

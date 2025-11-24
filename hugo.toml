@@ -1,0 +1,86 @@
+baseURL = "https://dosk.win"
+title = "Dosk 技术站"
+languageCode = "zh-cn"
+
+[pagination]
+  pagerSize = 10
+
+[permalinks]
+  posts = "/:year/:month/:day/:slug/"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[params]
+  tagline = "SpringHack 的无名技术小站"
+  description = "SpringHack 的无名技术小站"
+  fontSize = "small"
+  commentsProvider = "gitalk"
+
+[params.gitalk]
+  repo = "springhack"
+  owner = "springhack"
+  clientID = "63125e6057f210f8095c"
+  clientSecret = "e0a6c16cb45c54eb578e6fead8a87cf70b0471e0"
+  proxy = "https://dosk.win/fetch/https:github.com/login/oauth/access_token"
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.sass]
+    transpiler = "dartsass"
+
+[frontmatter]
+  date = [":filename", "date", "publishDate", "lastmod"]
+  publishDate = ["publishDate", "date"]
+  lastmod = ["lastmod", ":fileModTime", "date", "publishDate"]
+
+[menu]
+  [[menu.main]]
+    name = "home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "archives"
+    url = "/archives"
+    weight = 2
+  [[menu.main]]
+    name = "categories"
+    url = "/categories"
+    weight = 3
+  [[menu.main]]
+    name = "previous"
+    url = "/previous"
+    weight = 4
+  [[menu.main]]
+    name = "about"
+    url = "/about"
+    weight = 5
+
+[module]
+  [[module.mounts]]
+    source = "_posts"
+    target = "content/posts"
+  [[module.mounts]]
+    source = "pages"
+    target = "content"
+  [[module.mounts]]
+    source = "uploads"
+    target = "static/uploads"
+  [[module.mounts]]
+    source = "admin"
+    target = "static/admin"
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "assets"
+    target = "static/assets"
+  [[module.mounts]]
+    source = "favicon.ico"
+    target = "static/favicon.ico"
+  [[module.mounts]]
+    source = "cdn"
+    target = "static/cdn"

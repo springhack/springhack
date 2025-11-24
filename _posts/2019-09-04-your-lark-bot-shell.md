@@ -2,7 +2,6 @@
 layout: post
 categories:
   - code
-published: true
 description: 最近挖的新坑
 title: 使用 Bash Shell 构建的飞书机器人
 keywords: 'lark, feishu, bash, shell, bot'

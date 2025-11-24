@@ -2,7 +2,6 @@
 layout: post
 categories:
   - code
-published: true
 keywords: 'github, pages, '
 title: 集成 Prose 到 Github Pages
 description: 如何集成 Prose 到 Github Pages

@@ -2,7 +2,6 @@
 layout: post
 categories:
   - code
-published: true
 title: 'STL 内 std::{bind/tuple/function} 简单实现'
 keywords: 'cpp,stl,std,bind,tuple,function,'
 description: 记录下来自己慢慢品味
