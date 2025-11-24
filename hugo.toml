@@ -9,6 +9,14 @@ disableKinds = ["taxonomy"]
 [permalinks]
   posts = "/:year/:month/:day/:slug/"
 
+[outputs]
+  home = ["HTML", "RSS"]
+
+[outputFormats]
+  [outputFormats.RSS]
+    mediatype = "application/rss+xml"
+    baseName = "atom"
+
 [taxonomies]
   category = "categories"
   tag = "tags"
@@ -18,6 +26,8 @@ disableKinds = ["taxonomy"]
   description = "SpringHack 的无名技术小站"
   fontSize = "small"
   commentsProvider = "gitalk"
+  github_username = "springhack"
+  twitter_username = "springhack"
 
 [params.gitalk]
   repo = "springhack"

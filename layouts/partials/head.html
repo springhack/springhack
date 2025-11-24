@@ -59,6 +59,8 @@
   {{ $imgAbs := cond (hasPrefix $img "http") $img (absURL $img) }}
   <meta property="og:image" content="{{ $imgAbs }}">
 
+  <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }} RSS" href="{{ "atom.xml" | relURL }}">
+
   <link rel="stylesheet" href="/assets/css/main.css">
   <script defer src="/assets/js/heading-anchors.js"></script>
   {{ with .Params.js_file }}<script type="text/javascript" src="{{ . }}"></script>{{ end }}
