@@ -2,9 +2,13 @@
   <div id="gitalk-container"></div>
   <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
   <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  {{- $clean := trim .RelPermalink "/" -}}
+  {{- $dir := path.Dir $clean -}}
+  {{- $base := path.Base $clean -}}
+  {{- $id := cond (eq .Section "posts") (printf "%s/%s" $dir (md5 $base)) (printf "%s" $clean) -}}
   <script>
-    var gitalk = new Gitalk({
-      id: '/{{ trim .RelPermalink "/" }}/',
+    const gitalk = new Gitalk({
+      id: '{{ $id }}',
       clientID: '{{ .Site.Params.gitalk.clientID }}',
       clientSecret: '{{ .Site.Params.gitalk.clientSecret }}',
       repo: '{{ .Site.Params.gitalk.repo }}',
