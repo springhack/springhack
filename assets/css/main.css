@@ -169,7 +169,7 @@ blockquote {
 }
 
 blockquote::before {
-  content: "ℹ";
+  content: "❝";
   position: absolute;
   left: 0.9em;
   top: 0.7em;

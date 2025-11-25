@@ -32,9 +32,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Copy
-        # Outputs to the './_site' directory by default
-        run: mkdir ./_site && cp -rvf uploads ./_site/
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Build RSS with Hugo
+        run: hugo --config hugo.toml --minify --quiet
+      - name: Prepare artifact
+        run: |
+          mkdir -p ./_site
+          cp -rvf uploads ./_site/
+          cp -v public/atom.xml ./_site/atom.xml
       - name: Upload
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3.0.1
