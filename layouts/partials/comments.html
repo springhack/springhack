@@ -1,30 +1,52 @@
 {{ if and (not .IsHome) (ne .Params.comments false) (eq .Site.Params.commentsProvider "gitalk") }}
-  <div id="gitalk-container"></div>
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
   {{- $clean := trim .RelPermalink "/" -}}
   {{- $dir := path.Dir $clean -}}
   {{- $base := path.Base $clean -}}
   {{- $id := cond (eq .Section "posts") (printf "%s/%s" $dir (md5 $base)) (printf "%s" $clean) -}}
-  <script>
-    const gitalk = new Gitalk({
-      id: '{{ $id }}',
-      clientID: '{{ .Site.Params.gitalk.clientID }}',
-      clientSecret: '{{ .Site.Params.gitalk.clientSecret }}',
-      repo: '{{ .Site.Params.gitalk.repo }}',
-      owner: '{{ .Site.Params.gitalk.owner }}',
-      admin: ['{{ .Site.Params.gitalk.owner }}'],
-      labels: ['gitment'],
-      perPage: 50,
-      proxy: '{{ .Site.Params.gitalk.proxy }}'
-    })
-    gitalk.render('gitalk-container')
-  </script>
-  <style>
-    .gt-header-comment, .gt-comment-content { filter: invert(90%); }
-    .gt-container .gt-avatar-github:hover { background-color: transparent; }
-    .gt-container .gt-ico-github svg { fill: #6190e8; }
-    .gt-container .gt-meta { border-bottom: dashed 1px rgba(219,219,219,0.9); }
-    #gitalk-container p { color: initial; }
-  </style>
+  {{- $allow := default (slice) $.Site.Params.gitalk.allowedPages -}}
+  {{- $labels := default (slice "gitment") $.Site.Params.gitalk.labels -}}
+  {{- $perPage := default 50 $.Site.Params.gitalk.perPage -}}
+  {{- $isPost := and .IsPage (eq .Section "posts") -}}
+  {{- if or $isPost (in $allow $clean) -}}
+    <div
+      id="gitalk-container"
+      data-id="{{ $id }}"
+      data-client="{{ .Site.Params.gitalk.clientID }}"
+      data-secret="{{ .Site.Params.gitalk.clientSecret }}"
+      data-repo="{{ .Site.Params.gitalk.repo }}"
+      data-owner="{{ .Site.Params.gitalk.owner }}"
+      data-labels='{{ $labels | jsonify }}'
+      data-per-page="{{ $perPage }}"
+      data-proxy="{{ .Site.Params.gitalk.proxy }}"
+    ></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+      (() => {
+        const el = document.getElementById('gitalk-container');
+        if (!el) return;
+        const labels = JSON.parse(el.dataset.labels );
+        const perPage = parseInt(el.dataset.perPage || '50', 10);
+        const gitalk = new Gitalk({
+          id: el.dataset.id,
+          clientID: el.dataset.client,
+          clientSecret: el.dataset.secret,
+          repo: el.dataset.repo,
+          owner: el.dataset.owner,
+          admin: [el.dataset.owner],
+          labels: labels,
+          perPage: perPage,
+          proxy: el.dataset.proxy
+        });
+        gitalk.render('gitalk-container');
+      })();
+    </script>
+    <style>
+      .gt-header-comment, .gt-comment-content { filter: invert(90%); }
+      .gt-container .gt-avatar-github:hover { background-color: transparent; }
+      .gt-container .gt-ico-github svg { fill: #6190e8; }
+      .gt-container .gt-meta { border-bottom: dashed 1px rgba(219,219,219,0.9); }
+      #gitalk-container p { color: initial; }
+    </style>
+  {{- end -}}
 {{ end }}
