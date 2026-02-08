@@ -30,11 +30,10 @@ keywords: huawei, honor, m321, armbian, linux
 ### 优势
 
 * linux kernel 版本足够高，很多事情处理起来方便，rootfs 里的软件更新也很方便
-* 因为 hinas 里的 init 被改掉了，使用起来就像是机器引导 sdcard 的体感一致，需要更新内核只要 dd 一下就好，系统坏了就拔下 sdcard 修复就行
+* 因为 hinas 里的 init 被改掉了，使用起来就像是机器引导 sdcard 的体感一致，需要更新内核只要 dd 一下就好，系统坏了就拔下 sdcard 修复就行(其实纯属是我不想改 bootargs 那坨东西)
 
 ### 弊端
 
-* 没有 wifi 支持，我也懒得处理了，本质是缺 firmware，有心人想办法补齐就好了
 * soc 温度采集没有，对我的场景来说不那么重要，我也没管
 * bootargs 里有一些内核不支持的 args，不影响使用，dmesg 看着会难受点
 * linux kernel 不是 armbian 提供的，所以如果需要添加内核模块很麻烦，你可以选择自己编译下这个内核再添加，我没有这个需求
